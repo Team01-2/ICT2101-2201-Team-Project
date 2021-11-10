@@ -3,3 +3,5 @@
 3. commit regularly
 4. when unit testing is done, commit/push final changes and initiate pul request to dev
 6. delete feature branch
+7. only do bugfixes & documentation in rel branches
+8. use tags to demostrate rel versions in master branch
