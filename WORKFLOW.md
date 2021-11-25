@@ -9,3 +9,8 @@
 TEAM DEVELOPMENT WORKFLOW
 
 added dev branch
+create kaiching branch
+added Website Version 1.0
+updated Website Version 1.0 (update main.css and PlayScreen)
+create erin branch
+added Website Version 1.1 (merged together)
