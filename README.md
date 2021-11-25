@@ -16,10 +16,11 @@ Group Members:
 
 Using Git, we have created:
 1) main branch - the version that is finished developing and tested is pushed to here, Not allowed to be changed unless all group members verified and agreed on the version.
-2) dev branh - where we do our development.
+2) dev branch - where we do our development.
 3) individual branches - each developer developed and work on thier own personal features in thier own branch
 
 Our Current Structure in Github
+
 Main
 - Dev
   - kai ching
