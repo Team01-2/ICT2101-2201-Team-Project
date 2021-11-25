@@ -9,10 +9,17 @@
 TEAM DEVELOPMENT WORKFLOW
 
 added dev branch
+
 create Khairul branch
+
 added Website version 1.0(Start Screen, Edit Map and Admin Panel)
+
 create kaiching branch
+
 added Website Version 1.0(merged together with Start Screen, Edit Map and Admin Panel)
+
 updated Website Version 1.0 (update main.css and PlayScreen)
+
 create erin branch
+
 added Website Version 1.1 (merged together)
