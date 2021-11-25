@@ -1,0 +1,12 @@
+#canvas
+{
+    border: 5px solid black;
+    background-size: 100%;
+    position: absolute;
+}
+
+#canvas2
+{
+    border: 5px solid black;
+    background-size: 100%;
+}
