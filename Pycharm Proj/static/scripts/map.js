@@ -127,6 +127,7 @@ function drawGame()
     {
         removeAll();
         modal.style.display = "block"; // can trigger restart menu
+        return;
     }
     else if(received == "GO" && counter < len)
     {
@@ -335,20 +336,28 @@ function drawGame()
     if (gameMap[toIndex(player.tileFrom[0], player.tileFrom[1])] == 0)
     {
         modal.style.display = "block"; // can trigger restart menu
+        return;
     } else if(gameMap[toIndex(player.tileFrom[0], player.tileFrom[1])] == 3)
     {
         modal.style.display = "block"; // can trigger restart menu
+        return;
     } else if(gameMap[toIndex(player.tileFrom[0], player.tileFrom[1])] == undefined)
     {
         modal.style.display = "block"; // can trigger restart menu
+        return;
     }
 
     if(len > 0)
     {
         if(counter == len)
         {
-            removeAll();
-            len = 0;
+            if(player.tileFrom[0]==player.tileTo[0] && player.tileFrom[1]==player.tileTo[1])
+            {
+                removeAll();
+                document.getElementById('popout-text').innerHTML = "Finish";
+                modal1.style.display = "block";
+                len = 0;
+            }
         }
     }
 
@@ -449,9 +458,6 @@ function removeAll() {
 
 // When the user clicks anywhere outside of the popout, close it
 window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
     if (event.target == modal1) {
         modal1.style.display = "none";
     }
