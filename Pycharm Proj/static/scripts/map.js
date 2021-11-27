@@ -12,7 +12,7 @@ var finish = [4, 4]; // finish point
 
 var modal = document.getElementById("popoutSection"); //pop up modal for game over
 var modal1 = document.getElementById("popoutSection1"); // pop up modal for no commands to run
-var modal2 = document.getElementById("popoutSection2"); // pop up modal for limit exceeeded
+
 
 // map design
 var gameMap = [
@@ -122,12 +122,13 @@ function getUrl(){
 function drawGame()
 {
     getUrl(); //trigger receiveOK in flask
+    console.log(received);
     if(received == "KO") // black line detected
     {
         removeAll();
         modal.style.display = "block"; // can trigger restart menu
     }
-    if(received == "GO" && counter < len)
+    else if(received == "GO" && counter < len)
     {
         command = commandList[counter];
         console.log("getting direction")
@@ -157,6 +158,12 @@ function drawGame()
         counter++;
         received = "";
         document.getElementById('info').innerHTML = "";
+    }
+    else if(received == "TO")
+    {
+        removeAll();
+        document.getElementById('popout-text').innerHTML = "Command sent unsuccessfully!";
+        modal1.style.display = "block";
     }
     if(ctx==null)
     {
@@ -355,6 +362,7 @@ $(function () {
         len = commandList.length;
         if(len == 0)
         {
+            document.getElementById('popout-text').innerHTML = "Please add command!";
             modal1.style.display = "block";
             return;
         }
@@ -372,7 +380,8 @@ $(function () {
     console.log(modal)
     if (cmdNumber >= 10)
     {
-        modal2.style.display = "block";
+        document.getElementById('popout-text').innerHTML = "Commands exceeded limit!";
+        modal1.style.display = "block";
         return;
     }
     var val = "Up";
@@ -387,7 +396,8 @@ $(function () {
     $("#down").click(function (event) {
     if (cmdNumber >= 10)
     {
-        modal2.style.display = "block";
+        document.getElementById('popout-text').innerHTML = "Commands exceeded limit!";
+        modal1.style.display = "block";
         return;
     }
     var val = "Down";
@@ -402,7 +412,8 @@ $(function () {
     $("#left").click(function (event) {
     if (cmdNumber >= 10)
     {
-        modal2.style.display = "block";
+        document.getElementById('popout-text').innerHTML = "Commands exceeded limit!";
+        modal1.style.display = "block";
         return;
     }
     var val = "Left";
@@ -417,7 +428,8 @@ $(function () {
     $("#right").click(function (event) {
     if (cmdNumber >= 10)
     {
-        modal2.style.display = "block";
+        document.getElementById('popout-text').innerHTML = "Commands exceeded limit!";
+        modal1.style.display = "block";
         return;
     }
     var val = "Right";
@@ -442,8 +454,5 @@ window.onclick = function (event) {
     }
     if (event.target == modal1) {
         modal1.style.display = "none";
-    }
-    if (event.target == modal2) {
-        modal2.style.display = "none";
     }
 }
