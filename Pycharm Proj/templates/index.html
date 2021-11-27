@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"> </script>
+    <script src="{{url_for('static', filename='scripts/map.js')}}"></script>
+    <script>
+        function sendUserInfo(){
+            let userInfo = {
+                'name': 'Joh',
+                'type': 'Admin',
+            }
+            const request = new XMLHttpRequest();
+            request.open('POST', `/processUserInfo/${JSON.stringify(userInfo)}`)
+            request.onload = () => {
+                const flaskMessage = request.responseText
+                console.log(flaskMessage);
+            }
+            request.send();
+        }
+
+        function upload(){
+        let userInfo = {
+            'name': commandList,
+        }
+        const request = new XMLHttpRequest();
+        request.open('POST', `/upload/${JSON.stringify(userInfo)}`)
+        request.onload = () => {
+            const flaskMessage = request.responseText;
+            console.log(flaskMessage);
+        }
+        request.send();
+    }
+    </script>
+
+
+</head>
+<body>
+    <h1>BIg ass</h1>
+    <p>{{content}}</p>
+    <p>Speed: {{speed}}</p>
+    <p>{{left_rotation}}</p>
+    <canvas id="game" width="400" height="400"></canvas>
+    <input type = "button" id = "mybutton" value = "Rotate left" />
+    <input type = "button" id = "mybutton1" value = "Move up" />
+    <input type = "button" id = "mybutton2" value = "Move back" />
+    <input type = "button" id = "mybutton3" value = "Rotate right" />
+    <input type = "button" id = "mybutton4" value = "Stop" />
+    <input type = "button" id = "mybutton5" value = "Run" />
+    <button onclick="upload()">upload</button>
+    <button onclick="getData()">getData</button>
+
+    <div style="display:none;">
+        <img id="carUp"
+             src="/static/carUp.jpg"
+             width="30" height="30">
+        <img id="carRight"
+             src="/static/carRight.jpg"
+             width="30" height="30">
+        <img id="carDown"
+             src="/static/carDown.jpg"
+             width="30" height="30">
+        <img id="carLeft"
+             src="/static/carLeft.jpg"
+             width="30" height="30">
+    </div>
+
+    <a href=mapEditor><button>go map editor</button></a>
+    <a href=adminPanel><button>go admin panel</button></a>
+    <a href=indexStart><button>go index start</button></a>
+    <a href=playScreen><button>go play screen</button></a>
+
+<p id="info">{{someData}}</p>
+<p>{{button_result}}</p>
+<p id="forDisplay"></p>
+</body>
+</html>
+
