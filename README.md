@@ -8,8 +8,15 @@ Group Members:
   5. Lee Cheng Hao (2001657)
 
 # How to run
-- keep it straight to the point of how to access the entry point of the web app
-- any necessary dependencies to run it
+1. Copy URL of git repository
+2. Open Pycharm IDE
+3. Create new project in your local machine
+4. Click on VCS tab on top side of Pycharm IDE -> Import into Version Control -> Create Git Repository
+5. Locate the new project you just created and click on OK.
+6. Click on Terminal tab at the bottom of Pycharm IDE
+7. If terminal shows a different directory as the project you created, change directory into it by using cd <directory to project>
+8. Type "pip install flask" in terminal
+9. To run the project, type "python flask1.py" and click on URL that show up
 
 # Development Workflow
 (provide a brief yet sufficiently comprehensive description of your team’s workflow using git and GitHub features)
@@ -26,6 +33,7 @@ Main
   - kai ching
   - Erin
   - Khairul
+  - cheng hao
 
 
 # UAT 
