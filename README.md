@@ -38,8 +38,10 @@ Main
 
 # UAT 
 ## Use Case Diagram
+<img src="https://github.com/Team01-2/ICT2101-2201-Team-Project/blob/main/wiki_images/UseCaseDiagram.png" width="700" height="450">
 
 ## System State Diagram
+<img src="https://github.com/Team01-2/ICT2101-2201-Team-Project/blob/main/wiki_images/SystemStateDiagram.png" width="700" height="450">
 
 ## System Test Cases Video
 - an embedded video that runs through all the system test cases you have created (and refined) from M2
