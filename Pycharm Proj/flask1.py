@@ -5,7 +5,7 @@ import socket, threading, time, json
 
 #TCP SERVER
 HOST = '172.20.10.3'  # Standard loopback interface address (localhost)
-PORT = 80        # Port to listen on (non-privileged ports are > 1023)
+PORT = 8000        # Port to listen on (non-privileged ports are > 1023)
 data = b'' # storing data receive from car
 someData = "" # storing data received from car
 conn = {} #global conn
@@ -193,6 +193,8 @@ def run():
                 break
             if time.time() > t_end:   # when web portal don't get OK reply after sending commands. Might want to handle this
                 print("time is up")
+                someData = "TO"  # TO = Timeout
+                commandList.clear()
                 break
         t_end = time.time() + 10  # reset timer
     commandList = []
