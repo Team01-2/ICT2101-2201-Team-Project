@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Map Editor</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mapEditor.css') }}">
+        <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script defer src="{{url_for('static', filename='scripts/mapEditor.js')}}"></script>
+    </head>
+    <body onload="draw()">
+        <nav class="navbar navbar-light bg-light p-3">
+            <div class="d-flex col-12 col-md-3 col-lg-2 mb-2 mb-lg-0 flex-wrap flex-md-nowrap justify-content-between">
+                <a class="navbar-brand" href="#">ICT2101 Dashboard</a>
+                <button class="navbar-toggler d-md-none collapsed mb-3" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                    <div class="position-sticky pt-md-5">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="indexStart">
+                                    <i class="fa fa-gamepad"></i>
+                                    <span class="ml-2">Play Game</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="adminPanel">
+                                    <i class='fa fa-user-tie'></i>
+                                    <span class="ml-2">Admin Panel</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="mapEditor">
+                                    <i class='fa fa-map'></i>
+                                    <span class="ml-2">View/Edit Maps</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4">
+                <div id="map-editor" class="card" style='height: 700px'>
+                    <h1 id="title">Map Editor</h1>
+                    <div>
+                        <form action="/mapEditor.html" method="get">
+                            <label for="mapName">Please enter name:</label>
+                            <input type="text" id="mapName" name="mapName"><br>
+                        </form>
+                    </div>
+                    <div class="row" style="padding:20px;">
+                        <div class="col-sm-7">
+                            <div class="card" style='height: 550px'>
+                                <canvas id="canvas" width="480" height="480">canvas not supported</canvas>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="card" style='height: 550px'>
+                                <div style="padding:20px;">
+                                    <canvas id="canvas2" width="180" height="60">canvas not supported</canvas>
+                                </div>
+                                <div id="Instructions" style="padding:10px;">
+                                    <p>1. To choose where the walls are placed:
+                                        <br>
+                                            a. Select the red square
+                                        <br>
+                                            b. Tap on the map
+                                        <br>
+                                        2. To choose where the start point is:
+                                        <br>
+                                            a. Select the blue square
+                                        <br>
+                                            b. Tap on the map
+                                        <br>
+                                        3. To choose where the end point is:
+                                        <br>
+                                            a. Select the green square
+                                        <br>
+                                            b. Tap on the map
+                                    </p>
+                                </div>
+                                <div style="padding:10px;">
+                                    <button class="button btnSave" type="submit">Save Map</button>
+                                    <button class="button btnPlay">Play Game</button>
+                                    <div>
+                                        <button class="button btnClear" onclick="clearCanvas()" >Clear Map</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4" style="padding-bottom: 50px;">
+                        <div class="card" id="map">
+                            <h2>Maps</h2>
+                            <div class="card" style='height: 200px; padding-top:50px;'>
+                                <div style="text-align:right">
+                                    <a href="playScreen"><button class="button btnPlay">Play</button></a>
+                                    <a href="playScreen"><button class="button btnDelete">Delete</button></a>
+                                </div>
+                            </div>
+                            <div class="card" style='height: 200px; padding-top:50px;'>
+                                <div style="text-align:right">
+                                    <a href="playScreen"><button class="button btnPlay">Play</button></a>
+                                    <a href="playScreen"><button class="button btnDelete">Delete</button></a>
+                                </div>
+                            </div>
+                            <div class="card" style='height: 200px; padding-top:50px;'>
+                                <div style="text-align:right">
+                                    <a href="playScreen"><button class="button btnPlay">Play</button></a>
+                                    <a href="playScreen"><button class="button btnDelete">Delete</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>
+
