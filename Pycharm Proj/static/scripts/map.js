@@ -24,7 +24,7 @@ var gameMap = [
 ];
 
 
-var tileW = 60, tileH = 60;
+var tileW = 100, tileH = 100;
 var mapW = 5, mapH = 5;
 var currentSecond = 0, frameCount = 0, framesLastSecond = 0, lastFrameTime = 0;
 
@@ -42,8 +42,8 @@ function Character()
     this.tileFrom = [0, 3];
     this.tileTo = [0, 3];
     this.timeMoved = 0;
-    this.dimensions = [50, 50];
-    this.position = [5, 185];
+    this.dimensions = [90, 90];
+    this.position = [5, 305];
     this.delayMove = 700;
 }
 Character.prototype.placeAt = function(x, y)
@@ -313,7 +313,7 @@ function drawGame()
     var imageLeft = document.getElementById('carLeft');
     var flag = document.getElementById('flag');
 
-    ctx.drawImage(flag, tileW * finish[0] + 5, tileH * finish[1] + 5, 50, 50);
+    ctx.drawImage(flag, tileW * finish[0] + 5, tileH * finish[1] + 5, 90, 90);
 
     if(direction == "up")
     {

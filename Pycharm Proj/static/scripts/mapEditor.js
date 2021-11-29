@@ -21,8 +21,8 @@ window.addEventListener("keyup", function (e) {
 });
 requestAnimationFrame(drawGame);
 
-var tileW = 63, tileH = 63;
-var mapW = 8, mapH = 8;
+var tileW = 100, tileH = 100;
+var mapW = 5, mapH = 5;
 var currentSecond = 0, frameCount = 0, framesLastSecond = 0, lastFrameTime = 0;
 
 var keysDown = {
@@ -33,17 +33,15 @@ var keysDown = {
 };
 
 var player = new Character();
-var finish = [7, 7];
+var finish = [4, 4]; // finish point
 
+// map design
 var gameMap = [
-    1, 1, 0, 0, 0, 0, 0, 0,
-    1, 1, 1, 1, 0, 1, 1, 1,
-    0, 1, 0, 0, 0, 1, 0, 0,
-    0, 1, 1, 1, 1, 1, 1, 1,
-    0, 1, 0, 1, 0, 0, 0, 1,
-    0, 1, 0, 1, 0, 1, 0, 0,
-    0, 1, 1, 1, 1, 1, 1, 1,
-    0, 1, 0, 0, 0, 0, 0, 1
+    1, 1, 1, 0, 0,
+    1, 1, 1, 1, 0,
+    1, 1, 1, 0, 0,
+    1, 1, 1, 1, 1,
+    0, 1, 0, 1, 0
 ];
 
 gameMap[finish[0] + finish[1] * 8] = 3;
@@ -53,8 +51,8 @@ function Character()
     this.tileFrom = [1, 1];
     this.tileTo = [0, 0];
     this.timeMoved = 0;
-    this.dimensions = [30, 30];
-    this.position = [45, 45];
+    this.dimensions = [90, 90];
+    this.position = [5, 5];
     this.delayMove = 700;
 }
 Character.prototype.placeAt = function (x, y)
@@ -203,7 +201,6 @@ function handleClick(e)
     posx = pos.x;
     posy = pos.y;
     draw2(posx, posy);
-    //alert(posx + " " + posy);
 }
 
 function getMousePos2(c, evt)
@@ -221,7 +218,6 @@ function handleClick2(e)
     posx = pos.x;
     posy = pos.y;
     draw3(posx, posy);
-    //alert(posx + " " + posy);
 }
 
 function draw()
@@ -233,11 +229,11 @@ function draw()
             if (gameMap[x + y * 8] == 1)
             {
                 ctx.fillStyle = "black";
-                ctx.fillRect(63 * x, 63 * y, 63, 63);
+                ctx.fillRect(100 * x, 100 * y, 100, 100);
             } else
             {
                 ctx.fillStyle = "white";
-                ctx.fillRect(63 * x, 63 * y, 63, 63);
+                ctx.fillRect(100 * x, 100 * y, 100, 100);
             }
         }
     }
@@ -248,35 +244,35 @@ function draw()
         if (x == 0)
         {
             ctx2.fillStyle = "red";
-            ctx2.fillRect(63 * x, 63 * y, 63, 63);
+            ctx2.fillRect(60 * x, 60 * y, 60, 60);
         } else if (x == 1)
         {
             ctx2.fillStyle = "green";
-            ctx2.fillRect(63 * x, 63 * y, 63, 63);
+            ctx2.fillRect(60 * x, 60 * y, 60, 60);
         } else
         {
             ctx2.fillStyle = "blue";
-            ctx2.fillRect(63 * x, 63 * y, 63, 63);
+            ctx2.fillRect(60 * x, 60 * y, 60, 60);
         }
     }
 }
 
 function draw2(xCordinate, yCordinate)
 {
-    var xCord = Math.floor(xCordinate / 63);
-    var yCord = Math.floor(yCordinate / 63);
+    var xCord = Math.floor(xCordinate / 100);
+    var yCord = Math.floor(yCordinate / 100);
 
 
-    if (gameMap[xCord + yCord * 8] == 1)
+    if (gameMap[xCord + yCord * 5] == 1)
     {
         if (selected == 0)
         {
-            gameMap[xCord + yCord * 8] = 0;
+            gameMap[xCord + yCord * 5] = 0;
 
         } else if (selected == 1)
         {
-            gameMap[finish[0] + finish[1] * 8] = 1;
-            gameMap[xCord + yCord * 8] = 3;
+            gameMap[finish[0] + finish[1] * 5] = 1;
+            gameMap[xCord + yCord * 5] = 3;
 
         } else if (selected == 2)
         {
@@ -285,18 +281,18 @@ function draw2(xCordinate, yCordinate)
         }
     } else
     {
-        gameMap[xCord + yCord * 8] = 1;
+        gameMap[xCord + yCord * 5] = 1;
         ctx.fillStyle = "white";
     }
-    ctx.fillRect(63 * xCord, 63 * yCord, 63, 63);
+    ctx.fillRect(100 * xCord, 100 * yCord, 100, 100);
     return;
 }
 
 function draw3(xCordinate, yCordinate)
 {
-    var xCord = Math.floor(xCordinate / 63);
+    var xCord = Math.floor(xCordinate / 60);
     selected = xCord;
-    var yCord = Math.floor(yCordinate / 63);
+    var yCord = Math.floor(yCordinate / 60);
     var y = 0; // row 1 = 0
 
     for (var x = 0; x < 3; x++)
@@ -306,19 +302,24 @@ function draw3(xCordinate, yCordinate)
             selection[x] = 0;
             ctx2.lineWidth = 5;
             ctx2.strokeStyle = 'transparent';
-            ctx2.strokeRect(63 * x, 63 * y, 63, 63);
+            ctx2.strokeRect(60 * x, 60 * y, 60, 60);
         } else
         {
             selection[x] = 1;
 
             ctx2.lineWidth = 5;
             ctx2.strokeStyle = 'black';
-            ctx2.strokeRect(63 * x, 63 * y, 63, 63);
+            ctx2.strokeRect(60 * x, 60 * y, 60, 60);
         }
-        //ctx2.fillRect(63 * x, 63 * y, 63, 63);
     }
 
     return;
+}
+
+function clearCanvas(){
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 
