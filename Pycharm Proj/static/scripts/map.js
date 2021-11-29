@@ -12,7 +12,7 @@ var finish = [7, 7]; // finish point
 
 var modal = document.getElementById("popoutSection"); //pop up modal for game over
 var modal1 = document.getElementById("popoutSection1"); // pop up modal for no commands to run
-var modal2 = document.getElementById("popoutSection2"); // pop up modal for limit exceeeded1
+var modal2 = document.getElementById("popoutSection2"); // pop up modal for limit exceeeded
 
 // map design
 var gameMap = [
