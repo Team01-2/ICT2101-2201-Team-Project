@@ -68,7 +68,7 @@
                         <div class="row" style="padding-bottom: 50px;">
                             <div class="col-sm-8">
                                 <div class="card" style='height: 550px'>
-                                    <canvas id="game" width="480" height="480"></canvas>
+                                    <canvas id="game" width="500" height="500"></canvas>
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -98,16 +98,10 @@
                                                 <button class="StartButton" type="button" onclick="location.href = 'indexStart';" > Back to Main </button>
                                             </div>
                                         </div>
-                                        <!-- Popout after game ends content -->
+                                      <!-- Popout for different content content -->
                                         <div id="popoutSection1" class="popout">
                                             <div class="popout-content">
-                                                <p>No commands to run!</p>
-                                            </div>
-                                        </div>
-                                        <!-- Popout after command exceeds 10 -->
-                                        <div id="popoutSection2" class="popout">
-                                            <div class="popout-content">
-                                                <p>Commands exceeded limit!</p>
+                                                <p id="popout-text"></p>
                                             </div>
                                         </div>
                                         <div style="padding-top:20px;">

@@ -8,27 +8,24 @@ var len = 0; //size of commandlist
 var commandList = []; //command list for storing commands
 var cmdNumber = 0; //increment and decrement when command added or removed to command list
 
-var finish = [7, 7]; // finish point
+var finish = [4, 4]; // finish point
 
 var modal = document.getElementById("popoutSection"); //pop up modal for game over
 var modal1 = document.getElementById("popoutSection1"); // pop up modal for no commands to run
-var modal2 = document.getElementById("popoutSection2"); // pop up modal for limit exceeeded
+
 
 // map design
 var gameMap = [
-    1, 1, 0, 0, 0, 0, 0, 0,
-    1, 1, 1, 1, 0, 1, 1, 1,
-    0, 1, 0, 0, 0, 1, 0, 0,
-    0, 1, 1, 1, 1, 1, 1, 1,
-    0, 1, 0, 1, 0, 0, 0, 1,
-    0, 1, 0, 1, 0, 1, 0, 0,
-    0, 1, 1, 1, 1, 1, 1, 1,
-    0, 1, 0, 0, 0, 0, 0, 1
+    1, 1, 1, 0, 0,
+    1, 1, 1, 1, 0,
+    1, 1, 1, 0, 0,
+    1, 1, 1, 1, 1,
+    0, 1, 0, 1, 0
 ];
 
 
-var tileW = 60, tileH = 60;
-var mapW = 8, mapH = 8;
+var tileW = 100, tileH = 100;
+var mapW = 5, mapH = 5;
 var currentSecond = 0, frameCount = 0, framesLastSecond = 0, lastFrameTime = 0;
 
 gameMap[finish[0] + finish[1] * 5] = 3; // set grid x: 4, y: 4 to 3 for finishing
@@ -42,11 +39,11 @@ var player = new Character(); // robot car on map
 
 function Character()
 {
-    this.tileFrom = [1, 1];
-    this.tileTo = [0, 0];
+    this.tileFrom = [0, 3];
+    this.tileTo = [0, 3];
     this.timeMoved = 0;
-    this.dimensions = [30, 30];
-    this.position = [45, 45];
+    this.dimensions = [90, 90];
+    this.position = [5, 305];
     this.delayMove = 700;
 }
 Character.prototype.placeAt = function(x, y)
@@ -125,12 +122,14 @@ function getUrl(){
 function drawGame()
 {
     getUrl(); //trigger receiveOK in flask
+    console.log(received);
     if(received == "KO") // black line detected
     {
         removeAll();
         modal.style.display = "block"; // can trigger restart menu
+        return;
     }
-    if(received == "GO" && counter < len)
+    else if(received == "GO" && counter < len)
     {
         command = commandList[counter];
         console.log("getting direction")
@@ -160,6 +159,12 @@ function drawGame()
         counter++;
         received = "";
         document.getElementById('info').innerHTML = "";
+    }
+    else if(received == "TO")
+    {
+        removeAll();
+        document.getElementById('popout-text').innerHTML = "Command sent unsuccessfully!";
+        modal1.style.display = "block";
     }
     if(ctx==null)
     {
@@ -289,27 +294,18 @@ function drawGame()
             switch(gameMap[((y*mapW)+x)])
             {
                 case 0:
-                    ctx.fillStyle = "red";
-                    break;
-                case 3:
-                    finish = [x, y];
-                    ctx.fillStyle = "green";
+                    ctx.fillStyle = "#000001";
                     break;
                 default:
-                    ctx.fillStyle = "#ccffcc";
+                    ctx.fillStyle = "#EEEEEE";
             }
 
-            ctx.fillRect( x*tileW, y*tileH, tileW, tileH);
+        ctx.fillRect( x*tileW, y*tileH, tileW, tileH);
         }
     }
     ctx.fillStyle = "#0000ff";
 	ctx.fillRect(player.position[0], player.position[1], player.dimensions[0], player.dimensions[1]);
 
-    ctx.fillStyle = "green";
-    ctx.fillRect(finish[0] * tileW, finish[1] * tileH, tileW, tileH);
-
-    ctx.fillStyle = "#ff00ff";
-    ctx.fillText("FPS: " + framesLastSecond, 10, 20);
 
     var imageUp = document.getElementById('carUp');
     var imageRight = document.getElementById('carRight');
@@ -317,7 +313,7 @@ function drawGame()
     var imageLeft = document.getElementById('carLeft');
     var flag = document.getElementById('flag');
 
-    ctx.drawImage(flag, tileW * finish[0] + 5, tileH * finish[1] + 5, 50, 50);
+    ctx.drawImage(flag, tileW * finish[0] + 5, tileH * finish[1] + 5, 90, 90);
 
     if(direction == "up")
     {
@@ -340,20 +336,28 @@ function drawGame()
     if (gameMap[toIndex(player.tileFrom[0], player.tileFrom[1])] == 0)
     {
         modal.style.display = "block"; // can trigger restart menu
+        return;
     } else if(gameMap[toIndex(player.tileFrom[0], player.tileFrom[1])] == 3)
     {
         modal.style.display = "block"; // can trigger restart menu
+        return;
     } else if(gameMap[toIndex(player.tileFrom[0], player.tileFrom[1])] == undefined)
     {
         modal.style.display = "block"; // can trigger restart menu
+        return;
     }
 
     if(len > 0)
     {
         if(counter == len)
         {
-            removeAll();
-            len = 0;
+            if(player.tileFrom[0]==player.tileTo[0] && player.tileFrom[1]==player.tileTo[1])
+            {
+                removeAll();
+                document.getElementById('popout-text').innerHTML = "Finish";
+                modal1.style.display = "block";
+                len = 0;
+            }
         }
     }
 
@@ -367,6 +371,7 @@ $(function () {
         len = commandList.length;
         if(len == 0)
         {
+            document.getElementById('popout-text').innerHTML = "Please add command!";
             modal1.style.display = "block";
             return;
         }
@@ -384,7 +389,8 @@ $(function () {
     console.log(modal)
     if (cmdNumber >= 10)
     {
-        modal2.style.display = "block";
+        document.getElementById('popout-text').innerHTML = "Commands exceeded limit!";
+        modal1.style.display = "block";
         return;
     }
     var val = "Up";
@@ -399,7 +405,8 @@ $(function () {
     $("#down").click(function (event) {
     if (cmdNumber >= 10)
     {
-        modal2.style.display = "block";
+        document.getElementById('popout-text').innerHTML = "Commands exceeded limit!";
+        modal1.style.display = "block";
         return;
     }
     var val = "Down";
@@ -414,7 +421,8 @@ $(function () {
     $("#left").click(function (event) {
     if (cmdNumber >= 10)
     {
-        modal2.style.display = "block";
+        document.getElementById('popout-text').innerHTML = "Commands exceeded limit!";
+        modal1.style.display = "block";
         return;
     }
     var val = "Left";
@@ -429,7 +437,8 @@ $(function () {
     $("#right").click(function (event) {
     if (cmdNumber >= 10)
     {
-        modal2.style.display = "block";
+        document.getElementById('popout-text').innerHTML = "Commands exceeded limit!";
+        modal1.style.display = "block";
         return;
     }
     var val = "Right";
@@ -449,13 +458,7 @@ function removeAll() {
 
 // When the user clicks anywhere outside of the popout, close it
 window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
     if (event.target == modal1) {
         modal1.style.display = "none";
-    }
-    if (event.target == modal2) {
-        modal2.style.display = "none";
     }
 }
