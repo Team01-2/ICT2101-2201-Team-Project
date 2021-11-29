@@ -21,7 +21,7 @@ window.addEventListener("keyup", function (e) {
 });
 requestAnimationFrame(drawGame);
 
-var tileW = 63, tileH = 63;
+var tileW = 60, tileH = 60;
 var mapW = 8, mapH = 8;
 var currentSecond = 0, frameCount = 0, framesLastSecond = 0, lastFrameTime = 0;
 
@@ -203,7 +203,6 @@ function handleClick(e)
     posx = pos.x;
     posy = pos.y;
     draw2(posx, posy);
-    //alert(posx + " " + posy);
 }
 
 function getMousePos2(c, evt)
@@ -221,7 +220,6 @@ function handleClick2(e)
     posx = pos.x;
     posy = pos.y;
     draw3(posx, posy);
-    //alert(posx + " " + posy);
 }
 
 function draw()
@@ -233,11 +231,11 @@ function draw()
             if (gameMap[x + y * 8] == 1)
             {
                 ctx.fillStyle = "black";
-                ctx.fillRect(63 * x, 63 * y, 63, 63);
+                ctx.fillRect(60 * x, 60 * y, 60, 60);
             } else
             {
                 ctx.fillStyle = "white";
-                ctx.fillRect(63 * x, 63 * y, 63, 63);
+                ctx.fillRect(60 * x, 60 * y, 60, 60);
             }
         }
     }
@@ -248,23 +246,23 @@ function draw()
         if (x == 0)
         {
             ctx2.fillStyle = "red";
-            ctx2.fillRect(63 * x, 63 * y, 63, 63);
+            ctx2.fillRect(60 * x, 60 * y, 60, 60);
         } else if (x == 1)
         {
             ctx2.fillStyle = "green";
-            ctx2.fillRect(63 * x, 63 * y, 63, 63);
+            ctx2.fillRect(60 * x, 60 * y, 60, 60);
         } else
         {
             ctx2.fillStyle = "blue";
-            ctx2.fillRect(63 * x, 63 * y, 63, 63);
+            ctx2.fillRect(60 * x, 60 * y, 60, 60);
         }
     }
 }
 
 function draw2(xCordinate, yCordinate)
 {
-    var xCord = Math.floor(xCordinate / 63);
-    var yCord = Math.floor(yCordinate / 63);
+    var xCord = Math.floor(xCordinate / 60);
+    var yCord = Math.floor(yCordinate / 60);
 
 
     if (gameMap[xCord + yCord * 8] == 1)
@@ -288,15 +286,15 @@ function draw2(xCordinate, yCordinate)
         gameMap[xCord + yCord * 8] = 1;
         ctx.fillStyle = "white";
     }
-    ctx.fillRect(63 * xCord, 63 * yCord, 63, 63);
+    ctx.fillRect(60 * xCord, 60 * yCord, 60, 60);
     return;
 }
 
 function draw3(xCordinate, yCordinate)
 {
-    var xCord = Math.floor(xCordinate / 63);
+    var xCord = Math.floor(xCordinate / 60);
     selected = xCord;
-    var yCord = Math.floor(yCordinate / 63);
+    var yCord = Math.floor(yCordinate / 60);
     var y = 0; // row 1 = 0
 
     for (var x = 0; x < 3; x++)
@@ -306,19 +304,24 @@ function draw3(xCordinate, yCordinate)
             selection[x] = 0;
             ctx2.lineWidth = 5;
             ctx2.strokeStyle = 'transparent';
-            ctx2.strokeRect(63 * x, 63 * y, 63, 63);
+            ctx2.strokeRect(60 * x, 60 * y, 60, 60);
         } else
         {
             selection[x] = 1;
 
             ctx2.lineWidth = 5;
             ctx2.strokeStyle = 'black';
-            ctx2.strokeRect(63 * x, 63 * y, 63, 63);
+            ctx2.strokeRect(60 * x, 60 * y, 60, 60);
         }
-        //ctx2.fillRect(63 * x, 63 * y, 63, 63);
     }
 
     return;
+}
+
+function clearCanvas(){
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 
