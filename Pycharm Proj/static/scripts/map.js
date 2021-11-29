@@ -3,8 +3,8 @@ var ctx = null;
 var direction = "up";
 
 var received = ""; //variable storing data received from robot car
-var counter = 0; //counter to store current index of commandlist
-var len = 0; //size of commandlist
+var counter = 0; //counter to store current index of command list
+var len = 0; //size of command list
 var commandList = []; //command list for storing commands
 var cmdNumber = 0; //increment and decrement when command added or removed to command list
 
