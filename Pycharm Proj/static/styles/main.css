@@ -45,7 +45,7 @@
   cursor: pointer;
 }
 
-.btnStart, .btnInfo, .btnMap, .btnRemove, .btnRetrieve, .btnSend{
+.btnStart, .btnInfo, .btnMap, .btnRemove, .btnRetrieve, .btnSend, .btnSave, .btnPlay, .btnClear, .btnDelete{
   background-color: white;
   color: black;
   border: 2px solid #008CBA;
@@ -81,6 +81,26 @@
   color: white;
 }
 
+.btnSave:hover {
+  background-color: #008CBA;
+  color: white;
+}
+
+.btnPlay:hover {
+  background-color: #008CBA;
+  color: white;
+}
+
+.btnClear:hover {
+  background-color: #008CBA;
+  color: white;
+}
+
+.btnDelete:hover {
+  background-color: #008CBA;
+  color: white;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -109,15 +129,7 @@ body {
   box-shadow: 0 4px 4px 0 rgba(0, 0.15, 0, 0.15);
   padding: 16px;
   text-align: center;
-  background-color: #f1f1f1;
 }
-
-canvas {
-    border:1px solid #d3d3d3;
-    background-color: #f1f1f1;
-
-}
-
 
 /*
 ////////// POPOUT GAME OVER FOR CSS  //////////
@@ -157,4 +169,12 @@ canvas {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+.instructions{
+    font-size: 16px;
+}
+
+form{
+    bottom: 50px;
 }

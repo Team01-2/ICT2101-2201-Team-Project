@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
+        <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     </head>
     <body>
         <nav class="navbar navbar-light bg-light p-3">
@@ -19,8 +19,6 @@
                 </button>
             </div>
         </nav>
-
-
         <div class="container-fluid">
             <div class="row">
                 <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
@@ -28,19 +26,19 @@
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="indexStart">
-                                    <i class="fas fa-gamepad"></i>
+                                    <i class="fa fa-gamepad"></i>
                                     <span class="ml-2">Play Game</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="adminPanel">
-                                    <i class='fas fa-user-tie'></i>
+                                    <i class='fa fa-user-tie'></i>
                                     <span class="ml-2">Admin Panel</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="mapEditor">
-                                    <i class='fas fa-map'></i>
+                                    <i class='fa fa-map'></i>
                                     <span class="ml-2">View/Edit Maps</span>
                                 </a>
                             </li>
@@ -48,9 +46,9 @@
                     </div>
                 </nav>
                 <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4">
-                    <div id="start-screen" class="card" style='height: 600px'>
+                    <div id="start-screen" class="card" style='height: 600px; padding-top: 100px;'>
                         <h1 id="title">Maze Running Robot</h1>
-                        <div id="button">
+                        <div id="button" style="padding-top: 50px;">
                             <a href="playScreen"><button class="button btnStart">Start Game</button></a>
                             <button class="button btnInfo" data-toggle="modal" data-target="#modalinfo">Instructions</button>
                             <!-- Modal -->

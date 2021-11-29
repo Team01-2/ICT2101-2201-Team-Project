@@ -3,10 +3,27 @@
     border: 5px solid black;
     background-size: 100%;
     position: absolute;
+    top:30px;
+    left: 50px;
 }
 
 #canvas2
 {
     border: 5px solid black;
     background-size: 100%;
+}
+
+#game
+{
+    border: 5px solid black;
+    background-size: 100%;
+    position: absolute;
+    left: 100px;
+    top: 30px;
+}
+
+#map{
+    height: 690px;
+    padding-left:60px;
+    padding-right:60px;
 }

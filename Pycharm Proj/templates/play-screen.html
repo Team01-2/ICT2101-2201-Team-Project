@@ -6,9 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mapEditor.css') }}">
+        <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
         <script defer src="{{url_for('static', filename='scripts/map.js')}}"></script>
 
         <script>
@@ -35,10 +36,8 @@
                 </button>
             </div>
         </nav>
-
-
         <div class="container-fluid">
-            <div class="row">
+            <div class="row mt-4">
                 <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                     <div class="position-sticky pt-md-5">
                         <ul class="nav flex-column">
@@ -64,100 +63,110 @@
                     </div>
                 </nav>
                 <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4">
-                    <div id="play-screen" class="card" style='height: 500px'>
+                    <div id="play-screen" class="card" style='height: 650px'>
                         <h1 id="title" class="text-center">Maze Running Robot</h1>
-                        <div class="row">
+                        <div class="row" style="padding-bottom: 50px;">
                             <div class="col-sm-8">
-                                <div class="card" style='height: 400px'>
-                                    <canvas id="game" width="300" height="300"></canvas>
+                                <div class="card" style='height: 550px'>
+                                    <canvas id="game" width="480" height="480"></canvas>
                                 </div>
                             </div>
                             <div class="col-sm-4">
-                                <div class="card" style='height: 400px'>
+                                <div class="card" style='height: 550px'>
                                     <ol id="list">
                                     </ol>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col">
-                                <div class="card" style='height: 200px'>
-                                    <div>
-                                        <button id="up">UP</button>
-                                        <button id="down">DOWN</button>
-                                        <button id="left">LEFT</button>
-                                        <button id="right">RIGHT</button>
-                                    </div>
-                                    <!-- Popout after game ends content -->
-                                    <div id="popoutSection" class="popout">
-                                        <div class="popout-content">
-                                            <p>Game over! Level completed successfully!</p>
-                                            <button onClick="window.location.href = window.location.href">Retry</button>
-                                            <button class="StartButton" type="button" onclick="location.href = 'indexStart';" > Back to Main </button>
+                            <div class="row mt-5">
+                                <div class="col-sm-8">
+                                    <div class="card" style='height: 250px'>
+                                        <div style="text-align:center;">
+                                            <button id="up">UP</button>
+                                            <div style="padding-top:20px;">
+                                                <button id="left">LEFT</button>
+                                                <button id="right">RIGHT</button>
+                                            </div>
+                                            <div style="padding-top:20px;">
+                                                <button id="down">DOWN</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <!-- Popout for different content content -->
-                                    <div id="popoutSection1" class="popout">
-                                        <div class="popout-content">
-                                            <p id="popout-text"></p>
+                                        <!-- Popout after game ends content -->
+                                        <div id="popoutSection" class="popout">
+                                            <div class="popout-content">
+                                                <p>Game over! Level completed successfully!</p>
+                                                <button onClick="window.location.href = window.location.href">Retry</button>
+                                                <button class="StartButton" type="button" onclick="location.href = 'indexStart';" > Back to Main </button>
+                                            </div>
+                                        </div>
+                                      <!-- Popout for different content content -->
+                                      <div id="popoutSection1" class="popout">
+                                          <div class="popout-content">
+                                              <p id="popout-text"></p>
+                                          </div>
+                                      </div>
+                                        <div style="padding-top:20px;">
+                                            <input class="button btnStart" type="button" id="mybutton5" value = "Run"/>
+                                            <button onclick="upload()" class="button btnSend">Upload</button>
+                                            <button onclick="removeAll()" class="button btnRemove">Remove</button>
                                         </div>
                                     </div>
-                                    <div>
-                                        <input class="button btnStart" type="button" id="mybutton5" value = "Run" />
-                                        <button onclick="removeAll()" class="button btnRemove">Remove</button>
-                                        <button onclick="upload()" class="button btnSend">Upload</button>
+                                </div>
+                                <div class="col-sm-4 mt-4">
+                                    <div id="button" class ="text-center">
+                                        <div style="display: inline-block;">
+                                            <button class="button btnInfo" data-toggle="modal" data-target="#modalinfo">How To Play</button>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="modalinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                  <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalTitle">Instructions</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                    <p>There will be a maze displayed on the screen and you will need to use the controls to navigate it.</p>
+                                                    <p>Forward Arrow: Go Forward</p>
+                                                    <p>Right Arrow: Turn Right</p>
+                                                    <p>Left Arrow: Turn Left</p>
+                                                    <p>Back Arrow: Go Backward</p>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                        <a href="mapEditor"><button class="button btnMap">New Map</button></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-4">
-                            <div id="button" class ="text-center">
-                                <a href="mapEditor"><button class="button btnMap">New Map</button></a>
-                                <button class="button btnInfo" data-toggle="modal" data-target="#modalinfo">How To Play</button>
-                                <!-- Modal -->
-                                <div class="modal fade" id="modalinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="modalTitle">Instructions</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>There will be a maze displayed on the screen and you will need to use the controls to navigate it.</p>
-                                                <p>Forward Arrow: Go Forward</p>
-                                                <p>Right Arrow: Turn Right</p>
-                                                <p>Left Arrow: Turn Left</p>
-                                                <p>Back Arrow: Go Backward</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                            <div style="display:none;">
-                                <img id="carUp"
-                                     src="/static/carUp.jpg"
-                                     width="50" height="50">
-                                <img id="carRight"
-                                    src="/static/carRight.jpg"
-                                    width="50" height="50">
-                                <img id="carDown"
-                                    src="/static/carDown.jpg"
-                                    width="50" height="50">
-                                <img id="carLeft"
-                                    src="/static/carLeft.jpg"
-                                    width="50" height="50">
-                                <p id="info">{{someData}}</p>
-                                <img id="flag"
-                                    src="/static/Flag.jpg"
-                                    width="50" height="50">
+                        <div style="display:none;">
+                            <img id="carUp"
+                                 src="/static/carUp.jpg"
+                                 width="50" height="50">
+                            <img id="carRight"
+                                src="/static/carRight.jpg"
+                                width="50" height="50">
+                            <img id="carDown"
+                                src="/static/carDown.jpg"
+                                width="50" height="50">
+                            <img id="carLeft"
+                                src="/static/carLeft.jpg"
+                                width="50" height="50">
+                            <p id="info">{{someData}}</p>
+                            <img id="flag"
+                                src="/static/Flag.jpg"
+                                width="50" height="50">
                         </div>
                     </div>
                 </main>
             </div>
         </div>
     </body>
+<br>
 </html>
 

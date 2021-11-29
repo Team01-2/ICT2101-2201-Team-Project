@@ -5,13 +5,11 @@
         <title>Administrative Dashboard</title>
         <meta charset="UTF-8">
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
-
-
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+        <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     </head>
     <body>
         <nav class="navbar navbar-light bg-light p-3">
@@ -22,8 +20,6 @@
                 </button>
             </div>
         </nav>
-
-
         <div class="container-fluid">
             <div class="row">
                 <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
@@ -31,19 +27,19 @@
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="indexStart">
-                                    <i class="fas fa-gamepad"></i>
+                                    <i class="fa fa-gamepad"></i>
                                     <span class="ml-2">Play Game</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="adminPanel">
-                                    <i class='fas fa-user-tie'></i>
+                                    <i class='fa fa-user-tie'></i>
                                     <span class="ml-2">Admin Panel</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="mapEditor">
-                                    <i class='fas fa-map'></i>
+                                    <i class='fa fa-map'></i>
                                     <span class="ml-2">View/Edit Maps</span>
                                 </a>
                             </li>
@@ -52,23 +48,13 @@
                 </nav>
                 <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4">
                     <h1>Administrative Panel</h1>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="card" style='height: 400px'>
+                    <div class="row mt-4">
+                        <div class="col">
+                            <div class="card" style='height: 200px'>
                                 <div class="card-body">
                                     <div>
-                                        <h4>Total Left Wheel Rotation</h4>
-                                        <h3 style="padding-top: 80px">{{ left_rotation }}</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="card" style='height: 400px'>
-                                <div class="card-body">
-                                    <div>
-                                        <h4>Total Right Wheel Rotation</h4>
-                                        <h3 style="padding-top: 80px">{{ right_rotation }}</h3>
+                                        <h4>Car Connection</h4>
+                                        <h5 style="padding-top: 30px">{{status}}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -87,12 +73,22 @@
                         </div>
                     </div>
                     <div class="row mt-4">
-                        <div class="col">
+                        <div class="col-sm-6">
                             <div class="card" style='height: 200px'>
                                 <div class="card-body">
                                     <div>
-                                        <h4>Car Connection</h4>
-                                        <h5 style="padding-top: 30px">{{status}}</h5>
+                                        <h4>Total Left Wheel Rotation</h4>
+                                        <h3 style="padding-top: 80px">{{ left_rotation }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card" style='height: 200px'>
+                                <div class="card-body">
+                                    <div>
+                                        <h4>Total Right Wheel Rotation</h4>
+                                        <h3 style="padding-top: 80px">{{ right_rotation }}</h3>
                                     </div>
                                 </div>
                             </div>
