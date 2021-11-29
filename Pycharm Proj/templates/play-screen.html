@@ -90,6 +90,7 @@
                                                 <button id="down">DOWN</button>
                                             </div>
                                         </div>
+                                    </div>
                                         <!-- Popout after game ends content -->
                                         <div id="popoutSection" class="popout">
                                             <div class="popout-content">
@@ -98,18 +99,12 @@
                                                 <button class="StartButton" type="button" onclick="location.href = 'indexStart';" > Back to Main </button>
                                             </div>
                                         </div>
-                                        <!-- Popout after game ends content -->
-                                        <div id="popoutSection1" class="popout">
-                                            <div class="popout-content">
-                                                <p>No commands to run!</p>
-                                            </div>
-                                        </div>
-                                        <!-- Popout after command exceeds 10 -->
-                                        <div id="popoutSection2" class="popout">
-                                            <div class="popout-content">
-                                                <p>Commands exceeded limit!</p>
-                                            </div>
-                                        </div>
+                                      <!-- Popout for different content content -->
+                                      <div id="popoutSection1" class="popout">
+                                          <div class="popout-content">
+                                              <p id="popout-text"></p>
+                                          </div>
+                                      </div>
                                         <div style="padding-top:20px;">
                                             <input class="button btnStart" type="button" id="mybutton5" value = "Run"/>
                                             <button onclick="upload()" class="button btnSend">Upload</button>
