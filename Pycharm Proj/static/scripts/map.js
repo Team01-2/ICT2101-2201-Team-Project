@@ -102,7 +102,7 @@ window.onload = function()
         console.log(obj.start);
         console.log(obj.end);
         gameMap = obj.map;
-        player.tileFrom = obj.start;
+        //player.tileFrom = obj.start;
         player.tileTo = obj.start;
         player.position[0] = obj.start[0] * tileW + 5;
         player.position[1] = obj.start[1] * tileH + 5;
@@ -144,7 +144,7 @@ function getUrl(){
 function drawGame()
 {
     getUrl(); //trigger receiveOK in flask
-    console.log(received);
+    console.log(gameMap);
     if(received == "KO") // black line detected
     {
         removeAll();
