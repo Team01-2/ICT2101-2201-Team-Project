@@ -191,6 +191,35 @@ def saveMap(mapData):
     return "Map saved successfully"
 
 
+#when delete button is pressed
+@app.route('/deleteMap/<string:mapData>', methods=['POST'])
+def deleteMap(mapData):
+    global mapArray1
+    global mapArray2
+    global mapArray3
+    global startPoint1
+    global startPoint2
+    global startPoint3
+    global endPoint1
+    global endPoint2
+    global endPoint3
+    mapData = json.loads(mapData)
+    index = mapData['index']
+    if index == 1:
+        mapArray1 = []
+        startPoint1 = []
+        endPoint1 = []
+    elif index == 2:
+        mapArray2 = []
+        startPoint2 = []
+        endPoint2 = []
+    elif index == 3:
+        mapArray3 = []
+        startPoint3 = []
+        endPoint3 = []
+    return "Map deleted successfully"
+
+
 #when upload button is pressed, command list is pass using post
 @app.route('/upload/<string:commands>', methods=['POST'])
 def upload(commands):

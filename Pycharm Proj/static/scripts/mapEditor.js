@@ -389,3 +389,39 @@ function save(index){
     }
     request.send();
 }
+
+//Delete map function
+function deleteMap(mapIndex)
+{
+    if(mapList[mapIndex] == 1)
+    {
+        mapList[mapIndex] = 0;
+        availableMap += 1;
+        if(mapIndex == 0)
+        {
+            ctx3.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        else if(mapIndex == 1)
+        {
+            ctx4.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        else if(mapIndex == 2)
+        {
+            ctx5.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        deleteFromDatabase(mapIndex+1);
+    }
+}
+
+function deleteFromDatabase(index){
+    let mapData = {
+        'index': index,
+    }
+    const request = new XMLHttpRequest();
+    request.open('POST', `/deleteMap/${JSON.stringify(mapData)}`)
+    request.onload = () => {
+        const flaskMessage = request.responseText;
+        console.log(flaskMessage);
+    }
+    request.send();
+}
