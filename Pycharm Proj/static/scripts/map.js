@@ -95,6 +95,13 @@ window.onload = function()
     ctx = document.getElementById('game').getContext("2d");
     requestAnimationFrame(drawGame);
     ctx.font = "bold 10pt sans-serif";
+    for (var x = 0; x < mapW * mapH; x++) // for resetting map retrieved from mapeditor
+    {
+        if(gameMap[x] == 2)
+        {
+            gameMap[x] = 1;
+        }
+    }
 
 };
 
