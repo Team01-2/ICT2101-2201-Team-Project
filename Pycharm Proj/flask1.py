@@ -18,6 +18,16 @@ status = "disconnected"
 surface = "White"
 s = socket
 
+mapArray1 = []
+startPoint1 = []
+endPoint1 = []
+mapArray2 = []
+startPoint2 = []
+endPoint2 = []
+mapArray3 = []
+startPoint3 = []
+endPoint3 = []
+
 def launchServer():
     global conn
     global speed
@@ -149,6 +159,38 @@ def receiveOK():
     return someData1
 
 
+#when save button is pressed
+@app.route('/saveMap/<string:mapData>', methods=['POST'])
+def saveMap(mapData):
+    global mapArray1
+    global mapArray2
+    global mapArray3
+    global startPoint1
+    global startPoint2
+    global startPoint3
+    global endPoint1
+    global endPoint2
+    global endPoint3
+    mapData = json.loads(mapData)
+    index = mapData['index']
+    if index == 1:
+        mapArray1 = mapData['map']
+        startPoint1 = mapData['start']
+        endPoint1 = mapData['end']
+    elif index == 2:
+        mapArray2 = mapData['map']
+        startPoint2 = mapData['start']
+        endPoint2 = mapData['end']
+    elif index == 3:
+        mapArray3 = mapData['map']
+        startPoint3 = mapData['start']
+        endPoint3 = mapData['end']
+    print(mapData['map'])
+    print(mapData['start'])
+    print(mapData['end'])
+    return "Map saved successfully"
+
+
 #when upload button is pressed, command list is pass using post
 @app.route('/upload/<string:commands>', methods=['POST'])
 def upload(commands):
@@ -203,7 +245,21 @@ def run():
 #direct map editor page
 @app.route('/mapEditor')
 def go_mapEditor():
-    return render_template("mapEditor.html")
+    mapData = {
+        "map1": mapArray1,
+        "start1": startPoint1,
+        "end1": endPoint1,
+        "map2": mapArray2,
+        "start2": startPoint2,
+        "end2": endPoint2,
+        "map3": mapArray3,
+        "start3": startPoint3,
+        "end3": endPoint3,
+    }
+
+    # convert into JSON:
+    mapData = json.dumps(mapData)
+    return render_template("mapEditor.html", mapData=mapData)
 
 
 if __name__ == "__main__":

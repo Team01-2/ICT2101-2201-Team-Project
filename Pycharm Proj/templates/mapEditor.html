@@ -89,7 +89,7 @@
                                     </p>
                                 </div>
                                 <div style="padding:10px;">
-                                    <button class="button btnSave" type="submit">Save Map</button>
+                                    <button class="button btnSave" onclick="saveMap()" type="submit">Save Map</button>
                                     <button class="button btnPlay">Play Game</button>
                                     <div>
                                         <button class="button btnClear" onclick="clearCanvas()" >Clear Map</button>
@@ -98,30 +98,50 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-4" style="padding-bottom: 50px;">
-                        <div class="card" id="map">
-                            <h2>Maps</h2>
-                            <div class="card" style='height: 200px; padding-top:50px;'>
-                                <div style="text-align:right">
-                                    <a href="playScreen"><button class="button btnPlay">Play</button></a>
-                                    <a href="playScreen"><button class="button btnDelete">Delete</button></a>
+                </div>
+                    <div class="row mt-4" style="height: auto; padding-bottom: 50px;">
+                            <h2 style="text-align: center">Maps</h2>
+                        <div class="row" style="padding:10px;">
+                            <div class="col-sm-7">
+                                <div class="card" style='height: 550px'>
+                                    <canvas id="canvas3" width="500" height="500"></canvas>
                                 </div>
                             </div>
-                            <div class="card" style='height: 200px; padding-top:50px;'>
-                                <div style="text-align:right">
+                            <div class="col-sm-5">
+                                <div class="card" style='height: 550px'>
                                     <a href="playScreen"><button class="button btnPlay">Play</button></a>
-                                    <a href="playScreen"><button class="button btnDelete">Delete</button></a>
+                                    <button class="button btnDelete">Delete</button>
                                 </div>
                             </div>
-                            <div class="card" style='height: 200px; padding-top:50px;'>
-                                <div style="text-align:right">
+                        </div>
+                        <div class="row" style="padding:10px;">
+                            <div class="col-sm-7">
+                                <div class="card" style='height: 550px'>
+                                    <p>title</p>
+                                    <canvas id="canvas4" width="500" height="500"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="card" style='height: 550px'>
                                     <a href="playScreen"><button class="button btnPlay">Play</button></a>
-                                    <a href="playScreen"><button class="button btnDelete">Delete</button></a>
+                                    <button class="button btnDelete">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding:10px;">
+                            <div class="col-sm-7">
+                                <div class="card" style='height: 550px'>
+                                    <canvas id="canvas5" width="500" height="500"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="card" style='height: 550px'>
+                                    <a href="playScreen"><button class="button btnPlay">Play</button></a>
+                                    <button class="button btnDelete">Delete</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </main>
         </div>
         <div style="display:none;">
@@ -132,6 +152,7 @@
                 src="/static/Flag.jpg"
                 width="50" height="50">
         </div>
+        <p style="text-align: center;" id="mapData">{{mapData}}</p>
     </body>
 </html>
 

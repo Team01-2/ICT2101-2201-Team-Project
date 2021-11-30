@@ -6,31 +6,54 @@ var canvas2 = document.getElementById("canvas2");
 var ctx2 = document.getElementById('canvas2').getContext("2d");
 canvas2.addEventListener('click', handleClick2);
 
+var canvas3 = document.getElementById("canvas3");
+var ctx3 = document.getElementById('canvas3').getContext("2d");
+
+var canvas4 = document.getElementById("canvas4");
+var ctx4 = document.getElementById('canvas4').getContext("2d");
+
+var canvas5 = document.getElementById("canvas5");
+var ctx5 = document.getElementById('canvas5').getContext("2d");
+
+var availableMap = 3;
+var mapList = [0, 0, 0];
+
 var selection = [0, 0, 0];
 var selected = 0; // 0 = obstacle, 1 = finishing grid, 2 = car, default is 0
 
-window.addEventListener("keydown", function (e) {
-    if (e.keyCode >= 37 && e.keyCode <= 40) {
-        keysDown[e.keyCode] = true;
+window.onload = function()
+{
+    received = document.getElementById('mapData').innerHTML;
+    const obj = JSON.parse(received);
+    console.log(obj.map1)
+    console.log(obj.start1)
+    console.log(obj.end1)
+    if(obj.map1.length != 0)
+    {
+        availableMap -= 1;
+        mapList[0] = 1;
+        drawSaveMap(ctx3, obj.map1, obj.start1, obj.end1);
     }
-});
-window.addEventListener("keyup", function (e) {
-    if (e.keyCode >= 37 && e.keyCode <= 40) {
-        keysDown[e.keyCode] = false;
+    if(obj.map2.length != 0)
+    {
+        availableMap -= 1;
+        mapList[1] = 1;
+        drawSaveMap(ctx4, obj.map2, obj.start2, obj.end2);
     }
-});
-requestAnimationFrame(drawGame);
+    if(obj.map3.length != 0)
+    {
+        availableMap -= 1;
+        mapList[2] = 1;
+        drawSaveMap(ctx5, obj.map3, obj.start3, obj.end3);
+    }
+    draw();
+    requestAnimationFrame(drawGame);
+}
+
 
 var tileW = 100, tileH = 100;
 var mapW = 5, mapH = 5;
 var currentSecond = 0, frameCount = 0, framesLastSecond = 0, lastFrameTime = 0;
-
-var keysDown = {
-    37: false,
-    38: false,
-    39: false,
-    40: false
-};
 
 var player = new Character();
 var finish = [4, 4]; // finish point
@@ -48,7 +71,7 @@ gameMap[finish[0] + finish[1] * 5] = 3;
 
 function Character()
 {
-    this.tileFrom = [1, 1];
+    this.tileFrom = [0, 0];
     this.tileTo = [0, 0];
     this.timeMoved = 0;
     this.dimensions = [90, 90];
@@ -63,36 +86,7 @@ Character.prototype.placeAt = function (x, y)
     this.tileTo = [x, y];
     this.position = [((tileW * x) + ((tileW - this.dimensions[0]) / 2)), ((tileH * y) + ((tileH - this.dimensions[1]) / 2))];
 };
-Character.prototype.processMovement = function (t)
-{
-    if (this.tileFrom[0] == this.tileTo[0] && this.tileFrom[1] == this.tileTo[1])
-    {
-        return false;
-    }
-    if ((t - this.timeMoved) >= this.delayMove)
-    {
-        this.placeAt(this.tileTo[0], this.tileTo[1]);
-    } else
-    {
-        this.position[0] = (this.tileFrom[0] * tileW) + ((tileW - this.dimensions[0]) / 2);
-        this.position[1] = (this.tileFrom[1] * tileH) + ((tileH - this.dimensions[1]) / 2);
 
-        if (this.tileTo[0] != this.tileFrom[0])
-        {
-            var diff = (tileW / this.delayMove) * (t - this.timeMoved);
-            this.position[0] += (this.tileTo[0] < this.tileFrom[0] ? 0 - diff : diff);
-        }
-        if (this.tileTo[1] != this.tileFrom[1])
-        {
-            var diff = (tileH / this.delayMove) * (t - this.timeMoved);
-            this.position[1] += (this.tileTo[1] < this.tileFrom[1] ? 0 - diff : diff);
-        }
-
-        this.position[0] = Math.round(this.position[0]);
-        this.position[1] = Math.round(this.position[1]);
-    }
-    return true;
-};
 
 function toIndex(x, y)
 {
@@ -121,39 +115,6 @@ function drawGame()
         frameCount++;
     }
 
-    if (!player.processMovement(currentFrameTime))
-    {
-        if (keysDown[38] && player.tileFrom[1] > 0 && gameMap[toIndex(player.tileFrom[0], player.tileFrom[1] - 1)] == 1)
-        {
-            player.tileTo[1] -= 1;
-        } else if (keysDown[40] && player.tileFrom[1] < (mapH - 1) && gameMap[toIndex(player.tileFrom[0], player.tileFrom[1] + 1)] == 1)
-        {
-            player.tileTo[1] += 1;
-        } else if (keysDown[37] && player.tileFrom[0] > 0 && gameMap[toIndex(player.tileFrom[0] - 1, player.tileFrom[1])] == 1)
-        {
-            player.tileTo[0] -= 1;
-        } else if (keysDown[39] && player.tileFrom[0] < (mapW - 1) && gameMap[toIndex(player.tileFrom[0] + 1, player.tileFrom[1])] == 1)
-        {
-            player.tileTo[0] += 1;
-        } else if (keysDown[38] && player.tileFrom[1] > 0 && gameMap[toIndex(player.tileFrom[0], player.tileFrom[1] - 1)] == 3)
-        {
-            player.tileTo[1] -= 1;
-        }  else if (keysDown[40] && player.tileFrom[1] < (mapH - 1) && gameMap[toIndex(player.tileFrom[0], player.tileFrom[1] + 1)] == 3)
-        {
-            player.tileTo[1] += 1;
-        } else if (keysDown[37] && player.tileFrom[0] > 0 && gameMap[toIndex(player.tileFrom[0] - 1, player.tileFrom[1])] == 3)
-        {
-            player.tileTo[0] -= 1;
-        } else if (keysDown[39] && player.tileFrom[0] < (mapW - 1) && gameMap[toIndex(player.tileFrom[0] + 1, player.tileFrom[1])] == 3)
-        {
-            player.tileTo[0] += 1;
-        }
-        if (player.tileFrom[0] != player.tileTo[0] || player.tileFrom[1] != player.tileTo[1])
-        {
-            player.timeMoved = currentFrameTime;
-        }
-        console.log(gameMap)
-    }
 
     for (var y = 0; y < mapH; ++y)
     {
@@ -182,11 +143,61 @@ function drawGame()
 
     ctx.drawImage(flag, finish[0] * tileW, finish[1] * tileH, tileW, tileH);
 
-    ctx.fillStyle = "#ff00ff";
-    ctx.fillText("FPS: " + framesLastSecond, 10, 20);
+    lastFrameTime = currentFrameTime;
+    //requestAnimationFrame(drawGame);
+}
+
+function drawSaveMap(canvasType, mapList, startPoint, endPoint)
+{
+    if (canvasType == null)
+    {
+        return;
+    }
+
+    var currentFrameTime = Date.now();
+    var timeElapsed = currentFrameTime - lastFrameTime;
+
+    var sec = Math.floor(Date.now() / 1000);
+
+    if (sec != currentSecond)
+    {
+        currentSecond = sec;
+        framesLastSecond = frameCount;
+        frameCount = 1;
+    } else
+    {
+        frameCount++;
+    }
+
+
+    for (var y = 0; y < mapH; ++y)
+    {
+        for (var x = 0; x < mapW; ++x)
+        {
+            switch (mapList[((y * mapW) + x)])
+            {
+                case 0:
+                    canvasType.fillStyle = "red";
+                    break;
+                case 3:
+                    canvasType.fillStyle = "green";
+                    break;
+                default:
+                    canvasType.fillStyle = "#ccffcc";
+            }
+
+            canvasType.fillRect(x * tileW, y * tileH, tileW, tileH);
+        }
+    }
+    var imageUp = document.getElementById('carUp');
+    var flag = document.getElementById('flag');
+
+    canvasType.drawImage(imageUp, startPoint[0] * tileW + 5, startPoint[1] * tileH + 5, player.dimensions[0], player.dimensions[1]);
+
+    canvasType.drawImage(flag, endPoint * tileW, endPoint * tileH, tileW, tileH);
 
     lastFrameTime = currentFrameTime;
-    requestAnimationFrame(drawGame);
+    //requestAnimationFrame(drawGame);
 }
 
 function getMousePos(c, evt)
@@ -204,6 +215,7 @@ function handleClick(e)
     posx = pos.x;
     posy = pos.y;
     draw2(posx, posy);
+    requestAnimationFrame(drawGame);
 }
 
 function getMousePos2(c, evt)
@@ -225,11 +237,11 @@ function handleClick2(e)
 
 function draw()
 {
-    for (var x = 0; x < 8; x++)
+    for (var x = 0; x < 5; x++)
     {
-        for (var y = 0; y < 8; y++)
+        for (var y = 0; y < 5; y++)
         {
-            if (gameMap[x + y * 8] == 1)
+            if (gameMap[x + y * 5] == 1)
             {
                 ctx.fillStyle = "black";
                 ctx.fillRect(100 * x, 100 * y, 100, 100);
@@ -283,6 +295,8 @@ function draw2(xCordinate, yCordinate)
             gameMap[player.tileTo[0] + player.tileTo[1] * 5] = 1;
             player.tileTo[0] = xCord;
             player.tileTo[1] = yCord;
+            player.position[0] = xCord * tileW + 5;
+            player.position[1] = yCord * tileH + 5;
             gameMap[player.tileTo[0] + player.tileTo[1] * 5] = 2;
         }
     } else if(gameMap[xCord + yCord * 5] == 0)
@@ -328,5 +342,50 @@ function clearCanvas(){
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+function saveMap(){
+    if(availableMap != 0)
+    {
+        for(var i = 0; i < 3; i++)
+        {
+            if(mapList[i] == 0)
+            {
+                save(i+1);
+                if(i == 0)
+                {
+                    drawSaveMap(ctx3, gameMap, player.tileTo, finish);
+                }
+                else if(i == 1)
+                {
+                    drawSaveMap(ctx4, gameMap, player.tileTo, finish);
+                }
+                else if(i == 2)
+                {
+                    drawSaveMap(ctx5, gameMap, player.tileTo, finish);
+                }
+                mapList[i] = 1;
+                availableMap -= 1;
+                break;
+            }
+        }
+    }
+    console.log(gameMap);
+    console.log(finish);
+    console.log(player.tileTo[0]);
+    console.log(player.tileTo[1]);
+}
 
-
+function save(index){
+    let mapData = {
+        'map': gameMap,
+        'start': player.tileTo,
+        'end': finish,
+        'index': index
+    }
+    const request = new XMLHttpRequest();
+    request.open('POST', `/saveMap/${JSON.stringify(mapData)}`)
+    request.onload = () => {
+        const flaskMessage = request.responseText;
+        console.log(flaskMessage);
+    }
+    request.send();
+}
