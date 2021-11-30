@@ -27,7 +27,7 @@ def select_cmap (mapname):
     return cursor.fetchone() # is blob datatype in database wrong? IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT CHECK THIS
 
 # returns: list of tuples
-def select_comhist:
+def select_comhist():
     stmt_comhist = "SELECT * FROM commandhistory" # prepared statement
     cursor.execute(stmt_comhist) # SELECT * FROM commandhistory
     result = cursor.fetchall()
