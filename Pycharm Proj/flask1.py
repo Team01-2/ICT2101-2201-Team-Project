@@ -18,6 +18,7 @@ status = "disconnected"
 surface = "White"
 s = socket
 
+mapSelected = 0
 name1 = ""
 mapArray1 = []
 startPoint1 = []
@@ -116,7 +117,33 @@ def indexStart():
 # direct to play-screen.html
 @app.route("/playScreen")
 def playScreen():
-    return render_template("play-screen.html")
+    if mapSelected == 0:
+        mapData = {
+            "map": []
+        }
+    elif mapSelected == 1:
+        mapData = {
+            "name": name1,
+            "map": mapArray1,
+            "start": startPoint1,
+            "end": endPoint1,
+        }
+    elif mapSelected == 2:
+        mapData = {
+            "name": name2,
+            "map": mapArray2,
+            "start": startPoint2,
+            "end": endPoint2,
+        }
+    elif mapSelected == 3:
+        mapData = {
+            "name": name3,
+            "map": mapArray3,
+            "start": startPoint3,
+            "end": endPoint3,
+        }
+    mapData = json.dumps(mapData);
+    return render_template("play-screen.html", mapData=mapData)
 
 
 # always called by javascript to access robot car reply
@@ -204,6 +231,16 @@ def deleteMap(mapData):
         startPoint3 = []
         endPoint3 = []
     return "Map deleted successfully"
+
+
+#when play button is pressed
+@app.route('/selectIndex/<string:Index>', methods=['POST'])
+def selectIndex(Index):
+    global mapSelected
+    mapData = json.loads(Index)
+    mapSelected = mapData['index']
+
+    return "Switched map successfully"
 
 
 #when upload button is pressed, command list is pass using post

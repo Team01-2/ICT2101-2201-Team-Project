@@ -434,3 +434,24 @@ function deleteFromDatabase(index){
     }
     request.send();
 }
+
+function play(index){
+    if(mapList[index] == 1)
+    {
+        selectMap(index);
+    }
+    window.location.replace("playScreen");
+}
+
+function selectMap(index){
+    let Index = {
+        'index': index + 1,
+    }
+    const request = new XMLHttpRequest();
+    request.open('POST', `/selectIndex/${JSON.stringify(Index)}`)
+    request.onload = () => {
+        const flaskMessage = request.responseText;
+        console.log(flaskMessage);
+    }
+    request.send();
+}

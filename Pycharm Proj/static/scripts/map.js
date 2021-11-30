@@ -93,6 +93,21 @@ function toIndex(x, y)
 window.onload = function()
 {
     ctx = document.getElementById('game').getContext("2d");
+
+    mapCoordinates = document.getElementById('mapData').innerHTML;
+    const obj = JSON.parse(mapCoordinates);
+    if(obj.map.length != 0)
+    {
+        console.log(obj.map);
+        console.log(obj.start);
+        console.log(obj.end);
+        gameMap = obj.map;
+        player.tileFrom = obj.start;
+        player.tileTo = obj.start;
+        player.position[0] = obj.start[0] * tileW + 5;
+        player.position[1] = obj.start[1] * tileH + 5;
+        finish = obj.end;
+    }
     requestAnimationFrame(drawGame);
     ctx.font = "bold 10pt sans-serif";
     for (var x = 0; x < mapW * mapH; x++) // for resetting map retrieved from mapeditor
