@@ -56,26 +56,26 @@ var mapW = 5, mapH = 5;
 var currentSecond = 0, frameCount = 0, framesLastSecond = 0, lastFrameTime = 0;
 
 var player = new Character();
-var finish = [4, 4]; // finish point
+var finish = [0, 0]; // finish point
 
 // map design 0 = obstacle, 1 = no obstacle, 2 = player, 3 = finish
 var gameMap = [
-    1, 1, 1, 0, 0,
-    1, 1, 1, 1, 0,
-    1, 1, 1, 0, 0,
     1, 1, 1, 1, 1,
-    0, 1, 0, 1, 0
+    1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1
 ];
 
 gameMap[finish[0] + finish[1] * 5] = 3;
 
 function Character()
 {
-    this.tileFrom = [0, 0];
-    this.tileTo = [0, 0];
+    this.tileFrom = [4, 4];
+    this.tileTo = [4, 4];
     this.timeMoved = 0;
     this.dimensions = [90, 90];
-    this.position = [5, 5];
+    this.position = [405, 405];
     this.delayMove = 700;
 }
 gameMap[player.tileTo[0] + player.tileTo[1] * 5] = 2;
@@ -123,14 +123,14 @@ function drawGame()
             switch (gameMap[((y * mapW) + x)])
             {
                 case 0:
-                    ctx.fillStyle = "red";
+                    ctx.fillStyle = "#000001";
                     break;
                 case 3:
                     finish = [x, y];
                     ctx.fillStyle = "green";
                     break;
                 default:
-                    ctx.fillStyle = "#ccffcc";
+                    ctx.fillStyle = "#EEEEEE";
             }
 
             ctx.fillRect(x * tileW, y * tileH, tileW, tileH);
@@ -177,13 +177,13 @@ function drawSaveMap(canvasType, mapList, startPoint, endPoint)
             switch (mapList[((y * mapW) + x)])
             {
                 case 0:
-                    canvasType.fillStyle = "red";
+                    canvasType.fillStyle = "#000001";
                     break;
                 case 3:
                     canvasType.fillStyle = "green";
                     break;
                 default:
-                    canvasType.fillStyle = "#ccffcc";
+                    canvasType.fillStyle = "#EEEEEE";
             }
 
             canvasType.fillRect(x * tileW, y * tileH, tileW, tileH);
@@ -194,7 +194,8 @@ function drawSaveMap(canvasType, mapList, startPoint, endPoint)
 
     canvasType.drawImage(imageUp, startPoint[0] * tileW + 5, startPoint[1] * tileH + 5, player.dimensions[0], player.dimensions[1]);
 
-    canvasType.drawImage(flag, endPoint * tileW, endPoint * tileH, tileW, tileH);
+    canvasType.drawImage(flag, endPoint[0] * tileW, endPoint[1] * tileH, tileW, tileH);
+
 
     lastFrameTime = currentFrameTime;
     //requestAnimationFrame(drawGame);
@@ -259,7 +260,7 @@ function draw()
         var y = 0; // only using row 1 for canvas 2
         if (x == 0)
         {
-            ctx2.fillStyle = "red";
+            ctx2.fillStyle = "#000001";
             ctx2.fillRect(60 * x, 60 * y, 60, 60);
         } else if (x == 1)
         {
@@ -337,9 +338,14 @@ function draw3(xCordinate, yCordinate)
 }
 
 function clearCanvas(){
-    var canvas = document.getElementById("canvas");
-    var context = canvas.getContext('2d');
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    for(var i = 0; i < mapW * mapH; i++)
+    {
+        if(gameMap[i] == 0)
+        {
+            gameMap[i] = 1;
+        }
+    }
+    drawGame();
 }
 
 function saveMap(){
@@ -375,7 +381,10 @@ function saveMap(){
 }
 
 function save(index){
+    mapName = document.getElementById('mapName').value;
+    console.log(mapName)
     let mapData = {
+        'name': mapName,
         'map': gameMap,
         'start': player.tileTo,
         'end': finish,

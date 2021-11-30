@@ -18,12 +18,15 @@ status = "disconnected"
 surface = "White"
 s = socket
 
+name1 = ""
 mapArray1 = []
 startPoint1 = []
 endPoint1 = []
+name2 = ""
 mapArray2 = []
 startPoint2 = []
 endPoint2 = []
+name3 = ""
 mapArray3 = []
 startPoint3 = []
 endPoint3 = []
@@ -116,35 +119,6 @@ def playScreen():
     return render_template("play-screen.html")
 
 
-#@app.route('/rotate_left')
-#def send_left():
-    #conn.sendall(b'%l0')
-    #return render_template("index.html")
-
-#@app.route('/move_up')
-#def send_up():
-    #conn.sendall(b'%u0')
-    #return render_template("index.html")
-
-
-#@app.route('/move_back')
-#def send_back():
-    #conn.sendall(b'%b0')
-    #return render_template("index.html")
-
-
-#@app.route('/rotate_right')
-#def send_right():
-    #conn.sendall(b'%r0')
-    #return render_template("index.html")
-
-
-#@app.route('/stop')
-#def send_stop():
-    #conn.sendall(b'%s0')
-    #return render_template("index.html")
-
-
 # always called by javascript to access robot car reply
 @app.route('/receiveOK', methods=['POST'])
 def receiveOK():
@@ -162,6 +136,9 @@ def receiveOK():
 #when save button is pressed
 @app.route('/saveMap/<string:mapData>', methods=['POST'])
 def saveMap(mapData):
+    global name1
+    global name2
+    global name3
     global mapArray1
     global mapArray2
     global mapArray3
@@ -174,14 +151,17 @@ def saveMap(mapData):
     mapData = json.loads(mapData)
     index = mapData['index']
     if index == 1:
+        name1 = mapData['name']
         mapArray1 = mapData['map']
         startPoint1 = mapData['start']
         endPoint1 = mapData['end']
     elif index == 2:
+        name2 = mapData['name']
         mapArray2 = mapData['map']
         startPoint2 = mapData['start']
         endPoint2 = mapData['end']
     elif index == 3:
+        name3 = mapData['name']
         mapArray3 = mapData['map']
         startPoint3 = mapData['start']
         endPoint3 = mapData['end']
@@ -194,6 +174,9 @@ def saveMap(mapData):
 #when delete button is pressed
 @app.route('/deleteMap/<string:mapData>', methods=['POST'])
 def deleteMap(mapData):
+    global name1
+    global name2
+    global name3
     global mapArray1
     global mapArray2
     global mapArray3
@@ -206,14 +189,17 @@ def deleteMap(mapData):
     mapData = json.loads(mapData)
     index = mapData['index']
     if index == 1:
+        name1 = ""
         mapArray1 = []
         startPoint1 = []
         endPoint1 = []
     elif index == 2:
+        name2 = ""
         mapArray2 = []
         startPoint2 = []
         endPoint2 = []
     elif index == 3:
+        name3 = ""
         mapArray3 = []
         startPoint3 = []
         endPoint3 = []
@@ -275,12 +261,15 @@ def run():
 @app.route('/mapEditor')
 def go_mapEditor():
     mapData = {
+        "name1": name1,
         "map1": mapArray1,
         "start1": startPoint1,
         "end1": endPoint1,
+        "name2": name2,
         "map2": mapArray2,
         "start2": startPoint2,
         "end2": endPoint2,
+        "name3": name3,
         "map3": mapArray3,
         "start3": startPoint3,
         "end3": endPoint3,
