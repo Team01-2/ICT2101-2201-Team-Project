@@ -35,7 +35,7 @@ var keysDown = {
 var player = new Character();
 var finish = [4, 4]; // finish point
 
-// map design
+// map design 0 = obstacle, 1 = no obstacle, 2 = player, 3 = finish
 var gameMap = [
     1, 1, 1, 0, 0,
     1, 1, 1, 1, 0,
@@ -44,7 +44,7 @@ var gameMap = [
     0, 1, 0, 1, 0
 ];
 
-gameMap[finish[0] + finish[1] * 8] = 3;
+gameMap[finish[0] + finish[1] * 5] = 3;
 
 function Character()
 {
@@ -55,6 +55,8 @@ function Character()
     this.position = [5, 5];
     this.delayMove = 700;
 }
+gameMap[player.tileTo[0] + player.tileTo[1] * 5] = 2;
+
 Character.prototype.placeAt = function (x, y)
 {
     this.tileFrom = [x, y];
@@ -173,11 +175,12 @@ function drawGame()
             ctx.fillRect(x * tileW, y * tileH, tileW, tileH);
         }
     }
-    ctx.fillStyle = "#0000ff";
-    ctx.fillRect(player.position[0], player.position[1], player.dimensions[0], player.dimensions[1]);
+    var imageUp = document.getElementById('carUp');
+    var flag = document.getElementById('flag');
 
-    ctx.fillStyle = "green";
-    ctx.fillRect(finish[0] * tileW, finish[1] * tileH, tileW, tileH);
+    ctx.drawImage(imageUp, player.position[0], player.position[1], player.dimensions[0], player.dimensions[1]);
+
+    ctx.drawImage(flag, finish[0] * tileW, finish[1] * tileH, tileW, tileH);
 
     ctx.fillStyle = "#ff00ff";
     ctx.fillText("FPS: " + framesLastSecond, 10, 20);
@@ -237,7 +240,8 @@ function draw()
             }
         }
     }
-
+    var imageUp = document.getElementById('carUp');
+    var flag = document.getElementById('flag');
     for (var x = 0; x < 3; x++)
     {
         var y = 0; // only using row 1 for canvas 2
@@ -247,12 +251,10 @@ function draw()
             ctx2.fillRect(60 * x, 60 * y, 60, 60);
         } else if (x == 1)
         {
-            ctx2.fillStyle = "green";
-            ctx2.fillRect(60 * x, 60 * y, 60, 60);
+            ctx2.drawImage(flag, 60 * x, 60 * y, 60, 60);
         } else
         {
-            ctx2.fillStyle = "blue";
-            ctx2.fillRect(60 * x, 60 * y, 60, 60);
+            ctx2.drawImage(imageUp, 60 * x, 60 * y, 60, 60);
         }
     }
 }
@@ -272,14 +274,18 @@ function draw2(xCordinate, yCordinate)
         } else if (selected == 1)
         {
             gameMap[finish[0] + finish[1] * 5] = 1;
-            gameMap[xCord + yCord * 5] = 3;
+            finish[0] = xCord;
+            finish[1] = yCord;
+            gameMap[finish[0] + finish[1] * 5] = 3;
 
         } else if (selected == 2)
         {
+            gameMap[player.tileTo[0] + player.tileTo[1] * 5] = 1;
             player.tileTo[0] = xCord;
             player.tileTo[1] = yCord;
+            gameMap[player.tileTo[0] + player.tileTo[1] * 5] = 2;
         }
-    } else
+    } else if(gameMap[xCord + yCord * 5] == 0)
     {
         gameMap[xCord + yCord * 5] = 1;
         ctx.fillStyle = "white";
