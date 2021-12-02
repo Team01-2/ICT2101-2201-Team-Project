@@ -477,6 +477,19 @@ function removeAll() {
     document.getElementById("list").innerHTML = "";
 }
 
+function upload(){
+    let commands = {
+        'name': commandList,
+    }
+    const request = new XMLHttpRequest();
+    request.open('POST', `/upload/${JSON.stringify(commands)}`)
+    request.onload = () => {
+        const flaskMessage = request.responseText;
+        console.log(flaskMessage);
+    }
+    request.send();
+}
+
 
 // When the user clicks anywhere outside of the popout, close it
 window.onclick = function (event) {

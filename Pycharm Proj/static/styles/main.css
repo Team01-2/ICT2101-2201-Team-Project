@@ -178,3 +178,7 @@ body {
 form{
     bottom: 50px;
 }
+
+td, th{
+    padding: 8px;
+}

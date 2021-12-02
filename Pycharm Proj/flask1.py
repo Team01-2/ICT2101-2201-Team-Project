@@ -1,5 +1,5 @@
 # To start type "python "flask1.py" in terminal
-
+from datetime import datetime
 from flask import Flask, render_template, request
 import socket, threading, time, json
 
@@ -31,6 +31,8 @@ name3 = ""
 mapArray3 = []
 startPoint3 = []
 endPoint3 = []
+cmdHistory = []
+cmdTime = []
 
 def launchServer():
     global conn
@@ -104,10 +106,17 @@ def home():
 @app.route("/adminPanel")
 def adminPanel():
     global s
+    cmdHistJSON = {
+        "cmdHistory": cmdHistory,
+        "cmdTime": cmdTime
+    }
+
+    # convert into JSON:
+    cmdData = json.dumps(cmdHistJSON)
     try:
         conn.sendall(b'%c0') #prompt robot car for speed, left rotation info etc
     finally:
-        return render_template("admin-panel.html", speed=speed, left_rotation=left_rotation, right_rotation=right_rotation, cmd_received=cmd_received, cmd_executed=cmd_executed, status=status, surface=surface)
+        return render_template("admin-panel.html", speed=speed, left_rotation=left_rotation, right_rotation=right_rotation, cmd_received=cmd_received, cmd_executed=cmd_executed, status=status, surface=surface, cmdData=cmdData)
 
 # direct to main page index-start.html
 @app.route("/indexStart")
@@ -268,7 +277,22 @@ def run():
     global commandList
     global data
     global someData
-    t_end = time.time() + 10
+    global cmdHistory
+    global cmdTime
+    if len(commandList) > 0:
+        now = datetime.now()
+        currentTime = now.strftime("%H:%M:%S")
+        for cmd in commandList:
+            cmdTime.append(currentTime)
+            if cmd == b'%u0':
+                cmdHistory.append("up")
+            elif cmd == b'%b0':
+                cmdHistory.append("down")
+            elif cmd == b'%l0':
+                cmdHistory.append("left")
+            elif cmd == b'%r0':
+                cmdHistory.append("right")
+    t_end = time.time() + 5
     for cmd in commandList:
         counter = 0
         data = b'o'
@@ -290,7 +314,7 @@ def run():
                 someData = "TO"  # TO = Timeout
                 commandList.clear()
                 break
-        t_end = time.time() + 10  # reset timer
+        t_end = time.time() + 5  # reset timer
     commandList = []
     return render_template("play-screen.html")
 

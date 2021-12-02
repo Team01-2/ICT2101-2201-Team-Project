@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script defer src="{{url_for('static', filename='scripts/adminPanel.js')}}"></script>
     </head>
     <body>
         <nav class="navbar navbar-light bg-light p-3">
@@ -129,6 +130,24 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row mt-4 justify-content-center">
+                        <div class="col-sm-6" style="text-align: center;">
+                            <div class="card" style='height: auto;'>
+                                <div class="card-body">
+                                    <h4>Current Command History</h4>
+                                    <table id="list">
+                                        <tr>
+                                            <th>Time</th>
+                                            <th>Command</th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display:none;">
+                        <p id="info">{{cmdData}}</p>
                     </div>
                 </main>
             </div>
