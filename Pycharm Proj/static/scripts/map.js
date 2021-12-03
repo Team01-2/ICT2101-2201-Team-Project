@@ -139,7 +139,6 @@ function getUrl(){
 function drawGame()
 {
     getUrl(); //trigger receiveOK in flask
-    console.log(gameMap);
     if(received == "KO") // black line detected
     {
         removeAll();
