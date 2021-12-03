@@ -15,6 +15,8 @@ var ctx4 = document.getElementById('canvas4').getContext("2d");
 var canvas5 = document.getElementById("canvas5");
 var ctx5 = document.getElementById('canvas5').getContext("2d");
 
+var modal1 = document.getElementById("popoutSection1"); // pop up modal for no commands to run
+
 var availableMap = 3;
 var mapList = [0, 0, 0];
 
@@ -374,6 +376,12 @@ function saveMap(){
             }
         }
     }
+    else
+    {
+        document.getElementById('popout-text').innerHTML = "Maximum limit has reached!";
+        modal1.style.display = "block"; // can trigger restart menu
+        return;
+    }
     console.log(gameMap);
     console.log(finish);
     console.log(player.tileTo[0]);
@@ -454,4 +462,11 @@ function selectMap(index){
         console.log(flaskMessage);
     }
     request.send();
+}
+
+// When the user clicks anywhere outside of the popout, close it
+window.onclick = function (event) {
+    if (event.target == modal1) {
+        modal1.style.display = "none";
+    }
 }
