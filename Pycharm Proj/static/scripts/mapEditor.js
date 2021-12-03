@@ -17,19 +17,17 @@ var ctx5 = document.getElementById('canvas5').getContext("2d");
 
 var modal1 = document.getElementById("popoutSection1"); // pop up modal for no commands to run
 
-var availableMap = 3;
-var mapList = [0, 0, 0];
+var availableMap = 3; // available slot for saving map
+var mapList = [0, 0, 0]; // saved map list
 
-var selection = [0, 0, 0];
+var selection = [0, 0, 0]; // icon selector array
 var selected = 0; // 0 = obstacle, 1 = finishing grid, 2 = car, default is 0
 
+//when map editor first load up triggers below
 window.onload = function()
 {
     received = document.getElementById('mapData').innerHTML;
     const obj = JSON.parse(received);
-    console.log(obj.map1)
-    console.log(obj.start1)
-    console.log(obj.end1)
     if(obj.map1.length != 0)
     {
         availableMap -= 1;
@@ -95,6 +93,7 @@ function toIndex(x, y)
     return((y * mapW) + x);
 }
 
+// drawing of main editor map
 function drawGame()
 {
     if (ctx == null)
@@ -149,6 +148,7 @@ function drawGame()
     //requestAnimationFrame(drawGame);
 }
 
+// draw saved map
 function drawSaveMap(canvasType, mapList, startPoint, endPoint)
 {
     if (canvasType == null)
@@ -203,6 +203,7 @@ function drawSaveMap(canvasType, mapList, startPoint, endPoint)
     //requestAnimationFrame(drawGame);
 }
 
+//get mouse position on main editor canvas
 function getMousePos(c, evt)
 {
     var rect = c.getBoundingClientRect();
@@ -212,15 +213,17 @@ function getMousePos(c, evt)
     };
 }
 
+// click even handler on main editor canvas
 function handleClick(e)
 {
     var pos = getMousePos(canvas, e);
     posx = pos.x;
     posy = pos.y;
-    draw2(posx, posy);
+    drawOnEdit(posx, posy);
     requestAnimationFrame(drawGame);
 }
 
+//mouse position handler
 function getMousePos2(c, evt)
 {
     var rect = c.getBoundingClientRect();
@@ -230,12 +233,13 @@ function getMousePos2(c, evt)
     };
 }
 
+// click event handler on icon canvas
 function handleClick2(e)
 {
     var pos = getMousePos(canvas2, e);
     posx = pos.x;
     posy = pos.y;
-    draw3(posx, posy);
+    drawBorder(posx, posy);
 }
 
 function draw()
@@ -274,7 +278,8 @@ function draw()
     }
 }
 
-function draw2(xCordinate, yCordinate)
+// draw on editor canvas when canvas is clicked
+function drawOnEdit(xCordinate, yCordinate)
 {
     var xCord = Math.floor(xCordinate / 100);
     var yCord = Math.floor(yCordinate / 100);
@@ -311,7 +316,8 @@ function draw2(xCordinate, yCordinate)
     return;
 }
 
-function draw3(xCordinate, yCordinate)
+//drawing border on selected icon
+function drawBorder(xCordinate, yCordinate)
 {
     var xCord = Math.floor(xCordinate / 60);
     selected = xCord;
@@ -339,6 +345,7 @@ function draw3(xCordinate, yCordinate)
     return;
 }
 
+//clear all obstacles on map editor canvas
 function clearCanvas(){
     for(var i = 0; i < mapW * mapH; i++)
     {
@@ -350,6 +357,7 @@ function clearCanvas(){
     drawGame();
 }
 
+// when save map button is clicked
 function saveMap(){
     if(availableMap != 0)
     {
@@ -382,12 +390,9 @@ function saveMap(){
         modal1.style.display = "block"; // can trigger restart menu
         return;
     }
-    console.log(gameMap);
-    console.log(finish);
-    console.log(player.tileTo[0]);
-    console.log(player.tileTo[1]);
 }
 
+//for sending to flask side
 function save(index){
     mapName = document.getElementById('mapName').value;
     console.log(mapName)
@@ -430,6 +435,7 @@ function deleteMap(mapIndex)
     }
 }
 
+// delete from map details on flask side
 function deleteFromDatabase(index){
     let mapData = {
         'index': index,
@@ -443,6 +449,7 @@ function deleteFromDatabase(index){
     request.send();
 }
 
+//when play button is clicked
 function play(index){
     if(mapList[index] == 1)
     {
@@ -451,6 +458,7 @@ function play(index){
     window.location.replace("playScreen");
 }
 
+// set selected map index on flask side
 function selectMap(index){
     let Index = {
         'index': index + 1,

@@ -11,7 +11,7 @@ var cmdNumber = 0; //increment and decrement when command added or removed to co
 var finish = [4, 4]; // finish point
 
 var modal = document.getElementById("popoutSection"); //pop up modal for game over
-var modal1 = document.getElementById("popoutSection1"); // pop up modal for no commands to run
+var modal1 = document.getElementById("popoutSection1"); // pop up modal depending on the feedback
 
 
 // map design
@@ -98,9 +98,6 @@ window.onload = function()
     const obj = JSON.parse(mapCoordinates);
     if(obj.map.length != 0)
     {
-        console.log(obj.map);
-        console.log(obj.start);
-        console.log(obj.end);
         gameMap = obj.map;
         //player.tileFrom = obj.start;
         player.tileTo = obj.start;
@@ -122,7 +119,6 @@ window.onload = function()
 
     $.post("/receiveOK", "name").done(function(data) {
     $("#Result").text(data);
-    console.log(data)
 });
 
 function getUrl(){
@@ -133,7 +129,6 @@ function getUrl(){
         async: false,
     })
     .done(function(data){
-        //console.log(data);
         document.getElementById('info').innerHTML = data;
         received = document.getElementById('info').innerHTML;
     });
@@ -154,28 +149,21 @@ function drawGame()
     else if(received == "GO" && counter < len)
     {
         command = commandList[counter];
-        console.log("getting direction")
-        //console.log(direction);
-        //console.log(counter);
         if(command == "up")
         {
             moveUp = true;
-            console.log("getting direction up")
         }
         else if(command == "down")
         {
             moveDown = true;
-             console.log("getting direction down")
         }
         else if(command == "right")
         {
             moveRight = true;
-             console.log("getting direction right")
         }
         else if(command == "left")
         {
             moveLeft = true;
-             console.log("getting direction left")
         }
 
         counter++;
@@ -211,9 +199,8 @@ function drawGame()
 
     if(!player.processMovement(currentFrameTime))
     {
-        if(moveUp) //if(keysDown[38] && player.tileFrom[1]>0 && gameMap[toIndex(player.tileFrom[0], player.tileFrom[1]-1)]==1)
+        if(moveUp)
         {
-            console.log("it is uppp")
             if(direction == "up")
             {
                 player.tileTo[1]-= 1;
@@ -236,9 +223,8 @@ function drawGame()
             }
             moveUp = false;
         }
-		else if(moveDown) //else if(keysDown[40] && player.tileFrom[1]<(mapH-1) && gameMap[toIndex(player.tileFrom[0], player.tileFrom[1]+1)]==1)
+		else if(moveDown)
 		{
-		    console.log("it is downnnn")
             if(direction == "up")
             {
                 player.tileTo[1]+= 1;
@@ -261,9 +247,8 @@ function drawGame()
             }
             moveDown = false;
 		}
-		else if(moveLeft) //else if(keysDown[37] && player.tileFrom[0]>0 && gameMap[toIndex(player.tileFrom[0]-1, player.tileFrom[1])]==1)
+		else if(moveLeft)
 		{
-		    console.log("it is lefttttt")
 		    if(direction == "up")
 		    {
 		        direction = "left";
@@ -282,9 +267,8 @@ function drawGame()
 		    }
 		    moveLeft = false;
         }
-		else if(moveRight) //else if(keysDown[39] && player.tileFrom[0]<(mapW-1) && gameMap[toIndex(player.tileFrom[0]+1, player.tileFrom[1])]==1)
+		else if(moveRight)
 		{
-		    console.log("it is righttt")
             if(direction == "up")
 		    {
 		        direction = "right";
@@ -398,7 +382,6 @@ $(function () {
             return;
         }
         counter = 0;
-        console.log(len)
         $.getJSON('/run', {},
                 function (data) { });
         return true;
@@ -408,7 +391,6 @@ $(function () {
 //when up icon is clicked
 $(function () {
     $("#up").click(function (event) {
-    console.log(modal)
     if (cmdNumber >= 10)
     {
         document.getElementById('popout-text').innerHTML = "Commands exceeded limit!";

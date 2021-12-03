@@ -18,6 +18,7 @@ status = "disconnected"
 surface = "White"
 s = socket
 
+# below variable for map usage
 mapSelected = 0
 name1 = ""
 mapArray1 = []
@@ -118,10 +119,12 @@ def adminPanel():
     finally:
         return render_template("admin-panel.html", speed=speed, left_rotation=left_rotation, right_rotation=right_rotation, cmd_received=cmd_received, cmd_executed=cmd_executed, status=status, surface=surface, cmdData=cmdData)
 
+
 # direct to main page index-start.html
 @app.route("/indexStart")
 def indexStart():
     return render_template("index-start.html")
+
 
 # direct to play-screen.html
 @app.route("/playScreen")
@@ -151,7 +154,7 @@ def playScreen():
             "start": startPoint3,
             "end": endPoint3,
         }
-    mapData = json.dumps(mapData);
+    mapData = json.dumps(mapData)
     return render_template("play-screen.html", mapData=mapData)
 
 
@@ -201,9 +204,6 @@ def saveMap(mapData):
         mapArray3 = mapData['map']
         startPoint3 = mapData['start']
         endPoint3 = mapData['end']
-    print(mapData['map'])
-    print(mapData['start'])
-    print(mapData['end'])
     return "Map saved successfully"
 
 
@@ -317,6 +317,7 @@ def run():
         t_end = time.time() + 5  # reset timer
     commandList = []
     return render_template("play-screen.html")
+
 
 #direct map editor page
 @app.route('/mapEditor')
