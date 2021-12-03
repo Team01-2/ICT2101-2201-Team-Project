@@ -1,5 +1,5 @@
 # To start type "python "flask1.py" in terminal
-
+from datetime import datetime
 from flask import Flask, render_template, request
 import socket, threading, time, json
 
@@ -17,6 +17,22 @@ cmd_executed = 0
 status = "disconnected"
 surface = "White"
 s = socket
+
+mapSelected = 0
+name1 = ""
+mapArray1 = []
+startPoint1 = []
+endPoint1 = []
+name2 = ""
+mapArray2 = []
+startPoint2 = []
+endPoint2 = []
+name3 = ""
+mapArray3 = []
+startPoint3 = []
+endPoint3 = []
+cmdHistory = []
+cmdTime = []
 
 def launchServer():
     global conn
@@ -90,10 +106,17 @@ def home():
 @app.route("/adminPanel")
 def adminPanel():
     global s
+    cmdHistJSON = {
+        "cmdHistory": cmdHistory,
+        "cmdTime": cmdTime
+    }
+
+    # convert into JSON:
+    cmdData = json.dumps(cmdHistJSON)
     try:
         conn.sendall(b'%c0') #prompt robot car for speed, left rotation info etc
     finally:
-        return render_template("admin-panel.html", speed=speed, left_rotation=left_rotation, right_rotation=right_rotation, cmd_received=cmd_received, cmd_executed=cmd_executed, status=status, surface=surface)
+        return render_template("admin-panel.html", speed=speed, left_rotation=left_rotation, right_rotation=right_rotation, cmd_received=cmd_received, cmd_executed=cmd_executed, status=status, surface=surface, cmdData=cmdData)
 
 # direct to main page index-start.html
 @app.route("/indexStart")
@@ -103,36 +126,33 @@ def indexStart():
 # direct to play-screen.html
 @app.route("/playScreen")
 def playScreen():
-    return render_template("play-screen.html")
-
-
-#@app.route('/rotate_left')
-#def send_left():
-    #conn.sendall(b'%l0')
-    #return render_template("index.html")
-
-#@app.route('/move_up')
-#def send_up():
-    #conn.sendall(b'%u0')
-    #return render_template("index.html")
-
-
-#@app.route('/move_back')
-#def send_back():
-    #conn.sendall(b'%b0')
-    #return render_template("index.html")
-
-
-#@app.route('/rotate_right')
-#def send_right():
-    #conn.sendall(b'%r0')
-    #return render_template("index.html")
-
-
-#@app.route('/stop')
-#def send_stop():
-    #conn.sendall(b'%s0')
-    #return render_template("index.html")
+    if mapSelected == 0:
+        mapData = {
+            "map": []
+        }
+    elif mapSelected == 1:
+        mapData = {
+            "name": name1,
+            "map": mapArray1,
+            "start": startPoint1,
+            "end": endPoint1,
+        }
+    elif mapSelected == 2:
+        mapData = {
+            "name": name2,
+            "map": mapArray2,
+            "start": startPoint2,
+            "end": endPoint2,
+        }
+    elif mapSelected == 3:
+        mapData = {
+            "name": name3,
+            "map": mapArray3,
+            "start": startPoint3,
+            "end": endPoint3,
+        }
+    mapData = json.dumps(mapData);
+    return render_template("play-screen.html", mapData=mapData)
 
 
 # always called by javascript to access robot car reply
@@ -147,6 +167,89 @@ def receiveOK():
     someData1 = someData
     someData = ""
     return someData1
+
+
+#when save button is pressed
+@app.route('/saveMap/<string:mapData>', methods=['POST'])
+def saveMap(mapData):
+    global name1
+    global name2
+    global name3
+    global mapArray1
+    global mapArray2
+    global mapArray3
+    global startPoint1
+    global startPoint2
+    global startPoint3
+    global endPoint1
+    global endPoint2
+    global endPoint3
+    mapData = json.loads(mapData)
+    index = mapData['index']
+    if index == 1:
+        name1 = mapData['name']
+        mapArray1 = mapData['map']
+        startPoint1 = mapData['start']
+        endPoint1 = mapData['end']
+    elif index == 2:
+        name2 = mapData['name']
+        mapArray2 = mapData['map']
+        startPoint2 = mapData['start']
+        endPoint2 = mapData['end']
+    elif index == 3:
+        name3 = mapData['name']
+        mapArray3 = mapData['map']
+        startPoint3 = mapData['start']
+        endPoint3 = mapData['end']
+    print(mapData['map'])
+    print(mapData['start'])
+    print(mapData['end'])
+    return "Map saved successfully"
+
+
+#when delete button is pressed
+@app.route('/deleteMap/<string:mapData>', methods=['POST'])
+def deleteMap(mapData):
+    global name1
+    global name2
+    global name3
+    global mapArray1
+    global mapArray2
+    global mapArray3
+    global startPoint1
+    global startPoint2
+    global startPoint3
+    global endPoint1
+    global endPoint2
+    global endPoint3
+    mapData = json.loads(mapData)
+    index = mapData['index']
+    if index == 1:
+        name1 = ""
+        mapArray1 = []
+        startPoint1 = []
+        endPoint1 = []
+    elif index == 2:
+        name2 = ""
+        mapArray2 = []
+        startPoint2 = []
+        endPoint2 = []
+    elif index == 3:
+        name3 = ""
+        mapArray3 = []
+        startPoint3 = []
+        endPoint3 = []
+    return "Map deleted successfully"
+
+
+#when play button is pressed
+@app.route('/selectIndex/<string:Index>', methods=['POST'])
+def selectIndex(Index):
+    global mapSelected
+    mapData = json.loads(Index)
+    mapSelected = mapData['index']
+
+    return "Switched map successfully"
 
 
 #when upload button is pressed, command list is pass using post
@@ -174,7 +277,22 @@ def run():
     global commandList
     global data
     global someData
-    t_end = time.time() + 10
+    global cmdHistory
+    global cmdTime
+    if len(commandList) > 0:
+        now = datetime.now()
+        currentTime = now.strftime("%H:%M:%S")
+        for cmd in commandList:
+            cmdTime.append(currentTime)
+            if cmd == b'%u0':
+                cmdHistory.append("up")
+            elif cmd == b'%b0':
+                cmdHistory.append("down")
+            elif cmd == b'%l0':
+                cmdHistory.append("left")
+            elif cmd == b'%r0':
+                cmdHistory.append("right")
+    t_end = time.time() + 5
     for cmd in commandList:
         counter = 0
         data = b'o'
@@ -196,14 +314,31 @@ def run():
                 someData = "TO"  # TO = Timeout
                 commandList.clear()
                 break
-        t_end = time.time() + 10  # reset timer
+        t_end = time.time() + 5  # reset timer
     commandList = []
     return render_template("play-screen.html")
 
 #direct map editor page
 @app.route('/mapEditor')
 def go_mapEditor():
-    return render_template("mapEditor.html")
+    mapData = {
+        "name1": name1,
+        "map1": mapArray1,
+        "start1": startPoint1,
+        "end1": endPoint1,
+        "name2": name2,
+        "map2": mapArray2,
+        "start2": startPoint2,
+        "end2": endPoint2,
+        "name3": name3,
+        "map3": mapArray3,
+        "start3": startPoint3,
+        "end3": endPoint3,
+    }
+
+    # convert into JSON:
+    mapData = json.dumps(mapData)
+    return render_template("mapEditor.html", mapData=mapData)
 
 
 if __name__ == "__main__":

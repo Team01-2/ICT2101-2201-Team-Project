@@ -11,21 +11,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script defer src="{{url_for('static', filename='scripts/map.js')}}"></script>
-
-        <script>
-        function upload(){
-        let commands = {
-            'name': commandList,
-        }
-        const request = new XMLHttpRequest();
-        request.open('POST', `/upload/${JSON.stringify(commands)}`)
-        request.onload = () => {
-            const flaskMessage = request.responseText;
-            console.log(flaskMessage);
-        }
-        request.send();
-    }
-    </script>
     </head>
     <body>
         <nav class="navbar navbar-light bg-light p-3">
@@ -160,6 +145,7 @@
                             <img id="flag"
                                 src="/static/Flag.jpg"
                                 width="50" height="50">
+                            <p style="text-align: center;" id="mapData">{{mapData}}</p>
                         </div>
                     </div>
                 </main>
