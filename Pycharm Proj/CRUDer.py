@@ -44,7 +44,7 @@ def alter_cmap (mapname, obstaclearray, startpoint, endpoint):
 
 # always select all, full command history
 # returns: list of tuples
-def select_comhist:
+def select_comhist():
     stmt_comhist = "SELECT * FROM commandhistory" # prepared statement
     cursor.execute(stmt_comhist) # SELECT * FROM commandhistory
     
@@ -67,7 +67,7 @@ def delete_cmap (mapname):
 # init
 def init_db():
     global cnx
-    cnx = mysql.connector.connect(user='root', password='root', host='127.0.0.1', database='2201') # use `2201`;
+    cnx = mysql.connector.connect(user='root', password='hahaha99', host='127.0.0.1', database='2201') # use `2201`;
     global cursor
     cursor = cnx.cursor(buffered=True) # set to True to make sure all retrieved rows put into cursor
 

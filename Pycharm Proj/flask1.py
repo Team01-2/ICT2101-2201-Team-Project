@@ -1,7 +1,106 @@
 # To start type "python "flask1.py" in terminal
+import mysql.connector
 from datetime import datetime
 from flask import Flask, render_template, request
 import socket, threading, time, json
+
+cnx = None
+cursor = None
+
+
+# datatypes: string, list, list, list
+def insert_cmap(mapname, obstaclearray, startpoint, endpoint):
+    stmt_cmap = "INSERT INTO challengemaps (map_name, obstacle_array, start_point, end_point) VALUES (%s, %s, %s, %s)"  # prepared statement
+    data_cmap = (mapname, json.dumps(obstaclearray), json.dumps(startpoint),
+                 json.dumps(endpoint))  # data to be inserted - serialise python datatypes
+
+    cursor.execute(stmt_cmap, data_cmap)  # INSERT INTO challengemaps VALUES;
+    cnx.commit()  # commit changes
+
+
+# datatypes: string, list
+def insert_comhist(author, commandarray):
+    stmt_comhist = "INSERT INTO commandhistory (upload_time, author, commandarray) VALUES (%s, %s, %s)"  # prepared statement
+    data_comhist = (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), author,
+                    json.dumps(commandarray))  # data to be inserted - serialise python datatypes
+
+    cursor.execute(stmt_comhist, data_comhist)  # INSERT INTO commandhistory VALUES;
+    cnx.commit()  # commit changes
+
+
+# datatypes: string
+# returns: tuple
+def select_cmap():
+    stmt_cmap = "SELECT * FROM challengemaps"  # prepared statement
+
+    cursor.execute(stmt_cmap)  # SELECT * FROM challengemaps WHERE;
+    result = cursor.fetchall()
+    try:
+        row1 = ("", '[]', '[]', '[]')
+        row2 = ("", '[]', '[]', '[]')
+        row3 = ("", '[]', '[]', '[]')
+        row1 = result[0]
+        row2 = result[1]
+        row3 = result[2]
+    except:
+        print("db error")
+    x = (row1[0], json.loads(row1[1]), json.loads(row1[2]),
+         json.loads(row1[3]), row2[0], json.loads(row2[1]), json.loads(row2[2]),
+         json.loads(row2[3]), row3[0], json.loads(row3[1]), json.loads(row3[2]),
+         json.loads(row3[3]))  # deserialise obstaclearray, startpoint, endpoint json string
+
+    return x
+
+
+# use alter_cmap if mapname already exists, don't try to insert a new one with the same name - primary key violation
+# datatypes: string, list, list, list
+def alter_cmap(mapname, obstaclearray, startpoint, endpoint):
+    stmt_cmap = "UPDATE challengemaps SET obstacle_array = %s, start_point = %s, end_point = %s WHERE map_name = %s"  # prepared statement
+    data_cmap = (json.dumps(obstaclearray), json.dumps(startpoint), json.dumps(endpoint),
+                 mapname)  # redo the whole row if anything under an existing map name needs to change
+
+    cursor.execute(stmt_cmap, data_cmap)  # UPDATE challengemaps SET values;
+    cnx.commit()  # commit changes
+
+
+# always select all, full command history
+# returns: list of tuples
+def select_comhist():
+    stmt_comhist = "SELECT * FROM commandhistory"  # prepared statement
+    cursor.execute(stmt_comhist)  # SELECT * FROM commandhistory
+
+    result = cursor.fetchall()
+    for x in result:
+        x = (x[0].isoformat(sep=' '), x[1],
+             json.loads(x[2]))  # make datetime human readable, deserialise commandarray json string too
+        result.pop()
+        result.insert(0, x)  # replace the tuple because tuples are immutable, tsk
+
+    return result
+
+
+# datatypes: string
+def delete_cmap(mapname):
+    stmt_cmap = "DELETE FROM challengemaps WHERE map_name = %s"  # prepared statement
+    data_cmap = (mapname,)  # map to be deleted
+
+    cursor.execute(stmt_cmap, data_cmap)  # DELETE FROM challengemaps WHERE;
+    cnx.commit()  # commit changes
+
+
+# init
+def init_db():
+    global cnx
+    cnx = mysql.connector.connect(user='root', password='hahaha99', host='127.0.0.1', database='2201')  # use `2201`;
+    global cursor
+    cursor = cnx.cursor(buffered=True)  # set to True to make sure all retrieved rows put into cursor
+
+
+def shutdown():
+    global cursor
+    cursor.close()  # pack it up, cursor then connection
+    global cnx
+    cnx.close()
 
 #TCP SERVER
 HOST = '172.20.10.3'  # Standard loopback interface address (localhost)
@@ -107,6 +206,7 @@ def home():
 @app.route("/adminPanel")
 def adminPanel():
     global s
+    #cmdHistory = select_comhist
     cmdHistJSON = {
         "cmdHistory": cmdHistory,
         "cmdTime": cmdTime
@@ -194,16 +294,19 @@ def saveMap(mapData):
         mapArray1 = mapData['map']
         startPoint1 = mapData['start']
         endPoint1 = mapData['end']
+        insert_cmap(name1, mapArray1, startPoint1, endPoint1)
     elif index == 2:
         name2 = mapData['name']
         mapArray2 = mapData['map']
         startPoint2 = mapData['start']
         endPoint2 = mapData['end']
+        insert_cmap(name2, mapArray2, startPoint2, endPoint2)
     elif index == 3:
         name3 = mapData['name']
         mapArray3 = mapData['map']
         startPoint3 = mapData['start']
         endPoint3 = mapData['end']
+        insert_cmap(name3, mapArray3, startPoint3, endPoint3)
     return "Map saved successfully"
 
 
@@ -225,16 +328,19 @@ def deleteMap(mapData):
     mapData = json.loads(mapData)
     index = mapData['index']
     if index == 1:
+        delete_cmap(name1)
         name1 = ""
         mapArray1 = []
         startPoint1 = []
         endPoint1 = []
     elif index == 2:
+        delete_cmap(name2)
         name2 = ""
         mapArray2 = []
         startPoint2 = []
         endPoint2 = []
     elif index == 3:
+        delete_cmap(name3)
         name3 = ""
         mapArray3 = []
         startPoint3 = []
@@ -285,12 +391,16 @@ def run():
         for cmd in commandList:
             cmdTime.append(currentTime)
             if cmd == b'%u0':
+                insert_comhist("Suhaimi", ["up"])
                 cmdHistory.append("up")
             elif cmd == b'%b0':
+                insert_comhist("Suhaimi", ["down"])
                 cmdHistory.append("down")
             elif cmd == b'%l0':
+                insert_comhist("Suhaimi", ["left"])
                 cmdHistory.append("left")
             elif cmd == b'%r0':
+                insert_comhist("Suhaimi", ["right"])
                 cmdHistory.append("right")
     t_end = time.time() + 5
     for cmd in commandList:
@@ -322,6 +432,24 @@ def run():
 #direct map editor page
 @app.route('/mapEditor')
 def go_mapEditor():
+    global name1, mapArray1, startPoint1, endPoint1, name2, mapArray2, startPoint2, endPoint2, name3, mapArray3, startPoint3, endPoint3
+    try:
+        print(select_cmap())
+        mapsDetail = select_cmap()
+        name1 = mapsDetail[0]
+        mapArray1 = mapsDetail[1]
+        startPoint1 = mapsDetail[2]
+        endPoint1 = mapsDetail[3]
+        name2 = mapsDetail[4]
+        mapArray2 = mapsDetail[5]
+        startPoint2 = mapsDetail[6]
+        endPoint2 = mapsDetail[7]
+        name3 = mapsDetail[8]
+        mapArray3 = mapsDetail[9]
+        startPoint3 = mapsDetail[10]
+        endPoint3 = mapsDetail[11]
+    except:
+        print("error querying map from db")
     mapData = {
         "name1": name1,
         "map1": mapArray1,
@@ -343,6 +471,7 @@ def go_mapEditor():
 
 
 if __name__ == "__main__":
+    init_db()
     t = threading.Thread(target=launchServer)
     t.daemon = True
     t.start()
