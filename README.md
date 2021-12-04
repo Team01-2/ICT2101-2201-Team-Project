@@ -8,15 +8,21 @@ Group Members:
   5. Lee Cheng Hao (2001657)
 
 # How to run
-1. Copy URL of git repository
-2. Open Pycharm IDE
-3. Create new project in your local machine
-4. Click on VCS tab on top side of Pycharm IDE -> Import into Version Control -> Create Git Repository
-5. Locate the new project you just created and click on OK.
-6. Click on Terminal tab at the bottom of Pycharm IDE
-7. If terminal shows a different directory as the project you created, change directory into it by using cd <directory to project>
-8. Type "pip install flask" in terminal
-9. To run the project, type "python flask1.py" and click on URL that show up
+1. Download MySQL Installer (https://dev.mysql.com/downloads/installer/)
+2. Run & install MySQL Installer
+  - "Choosing Set up Type" section - select custom
+  - “Select Products” section - select MySQL Server, Connector/Python 8.0.27, MySQL Documentation 
+  - "Installation" section - select execute
+  - "Product Configuration" section - leave as default
+3. Open MySQL Workbench and click on Local Instance under MySQL Connection
+4. Insert the statements given in dbcreate.txt and execute
+5. Refresh Database
+6. Copy URL and download from the Main branch of our GITHUB repository
+7. Unzip project folder
+8. Run Python Command Line Terminal
+9. If terminal shows a different directory as the project you created, change directory into it by using cd <directory to project>
+10. Type "pip install flask" in terminal
+11. To run the project, type "python flask1.py" and click on URL that show up
 
 # Development Workflow
 (provide a brief yet sufficiently comprehensive description of your team’s workflow using git and GitHub features)
