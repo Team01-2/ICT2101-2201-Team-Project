@@ -49,7 +49,7 @@ Main
 <img src="https://github.com/Team01-2/ICT2101-2201-Team-Project/blob/main/wiki_images/SystemStateDiagram.png" width="700" height="450">
 
 ## System Test Cases Video
-- <Insert video here>
+- https://drive.google.com/file/d/1xGjjpOblQPOlJRw5hZVAjBe_Hd7VzMq8/view?usp=sharing
 
 # Whitebox Testing
 # Class
