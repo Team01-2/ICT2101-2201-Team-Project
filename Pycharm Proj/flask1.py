@@ -21,7 +21,7 @@ def insert_cmap(mapname, obstaclearray, startpoint, endpoint):
 # datatypes: string, list
 def insert_comhist(author, commandarray):
     stmt_comhist = "INSERT INTO commandhistory (upload_time, author, commandarray) VALUES (%s, %s, %s)"  # prepared statement
-    data_comhist = (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), author,
+    data_comhist = (datetime.now().strftime('%Y-%m-%d %H:%M:%S'), author,
                     json.dumps(commandarray))  # data to be inserted - serialise python datatypes
 
     cursor.execute(stmt_comhist, data_comhist)  # INSERT INTO commandhistory VALUES;
@@ -76,6 +76,7 @@ def select_comhist():
         result.pop()
         result.insert(0, x)  # replace the tuple because tuples are immutable, tsk
 
+    print(result)
     return result
 
 
@@ -206,7 +207,15 @@ def home():
 @app.route("/adminPanel")
 def adminPanel():
     global s
-    #cmdHistory = select_comhist
+    cmdHistory = []
+    cmdTime = []
+    cmdHistoryDB = select_comhist()
+    for i in range(len(cmdHistoryDB)):
+        item = cmdHistoryDB[i]
+        historyList = item[2]
+        for j in range(len(historyList)):
+            cmdHistory.append(historyList[j])
+            cmdTime.append(item[0])
     cmdHistJSON = {
         "cmdHistory": cmdHistory,
         "cmdTime": cmdTime
@@ -385,23 +394,26 @@ def run():
     global someData
     global cmdHistory
     global cmdTime
+    appendDBlist = []
+    init_db()
     if len(commandList) > 0:
         now = datetime.now()
         currentTime = now.strftime("%H:%M:%S")
         for cmd in commandList:
             cmdTime.append(currentTime)
             if cmd == b'%u0':
-                insert_comhist("Suhaimi", ["up"])
+                appendDBlist.append("up")
                 cmdHistory.append("up")
             elif cmd == b'%b0':
-                insert_comhist("Suhaimi", ["down"])
+                appendDBlist.append("down")
                 cmdHistory.append("down")
             elif cmd == b'%l0':
-                insert_comhist("Suhaimi", ["left"])
+                appendDBlist.append("left")
                 cmdHistory.append("left")
             elif cmd == b'%r0':
-                insert_comhist("Suhaimi", ["right"])
+                appendDBlist.append("right")
                 cmdHistory.append("right")
+        insert_comhist("Suhaimi", appendDBlist)
     t_end = time.time() + 5
     for cmd in commandList:
         counter = 0
