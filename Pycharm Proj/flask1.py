@@ -111,7 +111,7 @@ def adminPanel():
     global s
     cmdHistory = []
     cmdTime = []
-    cmdHistoryDB = CRUDdbFunc.select_comhist()
+    cmdHistoryDB = modules.CRUDdbFunc.select_comhist()
     for i in range(len(cmdHistoryDB)):
         item = cmdHistoryDB[i]
         historyList = item[2]
@@ -205,19 +205,19 @@ def saveMap(mapData):
         mapArray1 = mapData['map']
         startPoint1 = mapData['start']
         endPoint1 = mapData['end']
-        CRUDdbFunc.insert_cmap(name1, mapArray1, startPoint1, endPoint1)
+        modules.CRUDdbFunc.insert_cmap(name1, mapArray1, startPoint1, endPoint1)
     elif index == 2:
         name2 = mapData['name']
         mapArray2 = mapData['map']
         startPoint2 = mapData['start']
         endPoint2 = mapData['end']
-        CRUDdbFunc.insert_cmap(name2, mapArray2, startPoint2, endPoint2)
+        modules.CRUDdbFunc.insert_cmap(name2, mapArray2, startPoint2, endPoint2)
     elif index == 3:
         name3 = mapData['name']
         mapArray3 = mapData['map']
         startPoint3 = mapData['start']
         endPoint3 = mapData['end']
-        CRUDdbFunc.insert_cmap(name3, mapArray3, startPoint3, endPoint3)
+        modules.CRUDdbFunc.insert_cmap(name3, mapArray3, startPoint3, endPoint3)
     return "Map saved successfully"
 
 
@@ -239,19 +239,19 @@ def deleteMap(mapData):
     mapData = json.loads(mapData)
     index = mapData['index']
     if index == 1:
-        CRUDdbFunc.delete_cmap(name1)
+        modules.CRUDdbFunc.delete_cmap(name1)
         name1 = ""
         mapArray1 = []
         startPoint1 = []
         endPoint1 = []
     elif index == 2:
-        CRUDdbFunc.delete_cmap(name2)
+        modules.CRUDdbFunc.delete_cmap(name2)
         name2 = ""
         mapArray2 = []
         startPoint2 = []
         endPoint2 = []
     elif index == 3:
-        CRUDdbFunc.delete_cmap(name3)
+        modules.CRUDdbFunc.delete_cmap(name3)
         name3 = ""
         mapArray3 = []
         startPoint3 = []
@@ -297,7 +297,7 @@ def run():
     global cmdHistory
     global cmdTime
     appendDBlist = []
-    CRUDdbFunc.init_db()
+    modules.CRUDdbFunc.init_db()
     if len(commandList) > 0:
         now = datetime.now()
         currentTime = now.strftime("%H:%M:%S")
@@ -315,7 +315,7 @@ def run():
             elif cmd == b'%r0':
                 appendDBlist.append("right")
                 cmdHistory.append("right")
-        CRUDdbFunc.insert_comhist("Suhaimi", appendDBlist)
+        modules.CRUDdbFunc.insert_comhist("Suhaimi", appendDBlist)
     t_end = time.time() + 5
     for cmd in commandList:
         counter = 0
@@ -348,8 +348,8 @@ def run():
 def go_mapEditor():
     global name1, mapArray1, startPoint1, endPoint1, name2, mapArray2, startPoint2, endPoint2, name3, mapArray3, startPoint3, endPoint3
     try:
-        print(CRUDdbFunc.select_cmap())
-        mapsDetail = CRUDdbFunc.select_cmap()
+        print(modules.CRUDdbFunc.select_cmap())
+        mapsDetail = modules.CRUDdbFunc.select_cmap()
         name1 = mapsDetail[0]
         mapArray1 = mapsDetail[1]
         startPoint1 = mapsDetail[2]
@@ -385,7 +385,7 @@ def go_mapEditor():
 
 
 if __name__ == "__main__":
-    CRUDdbFunc.init_db()
+    modules.CRUDdbFunc.init_db()
     t = threading.Thread(target=launchServer)
     t.daemon = True
     t.start()
