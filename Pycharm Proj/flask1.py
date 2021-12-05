@@ -1,4 +1,4 @@
-# To start type "python "flask1.py" in terminal
+# To start type "python "flask1.py" in terminal for car demo
 from datetime import datetime
 from flask import Flask, render_template, request
 import socket, threading, time, json
