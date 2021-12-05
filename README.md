@@ -31,16 +31,25 @@ Using Git, we have created:
 1) main branch - the version that is finished developing and tested is pushed to here, Not allowed to be changed unless all group members verified and agreed on the version.
 2) dev branch - where we do our development.
 3) individual branches - each developer developed and work on thier own personal features in thier own branch
-
+4) Github Project Board feature to track our progress and tasks allocated during our meetings (https://github.com/Team01-2/ICT2101-2201-Team-Project/projects/1)
+  - Backlog (For tracking and documentation purposes)
+  - Current To-Do List (List of tasks we have come out with after every meeting with a deadline of when all tasks should be completed by)
+  - To-Do List (Tasks related to Website ONLY)
+  - To-Do List (Tasks related to Others, E.g Database, Documentations)
+  - In Progress (Tasks that are currently on-going)
+  - Completed (Completed Tasks)
+  - Diagrams & Calculations (All the latest diagrams and calculations goes here)
+5) Github Issues feature to track major developments changes during our project 
+  
 Our Current Structure in Github
-
 Main
 - Dev
   - kai ching
   - Erin
   - Khairul
   - cheng hao
-
+  - suhaimi
+  
 # UAT 
 ## Use Case Diagram
 <img src="https://github.com/Team01-2/ICT2101-2201-Team-Project/blob/main/wiki_images/UseCaseDiagram.png" width="700" height="450">
@@ -49,8 +58,8 @@ Main
 <img src="https://github.com/Team01-2/ICT2101-2201-Team-Project/blob/main/wiki_images/SystemStateDiagram.png" width="700" height="450">
 
 ## System Test Cases Video
-- https://drive.google.com/file/d/1xGjjpOblQPOlJRw5hZVAjBe_Hd7VzMq8/view?usp=sharing
-
+View this: https://drive.google.com/file/d/1xGjjpOblQPOlJRw5hZVAjBe_Hd7VzMq8/view?usp=sharing
+  
 # Whitebox Testing
 # Class
 - choose one meaningful class to demonstrate your test code. “Meaningful” here means 2 or more interactions with other classes, e.g., a Control class. 
