@@ -1,7 +1,9 @@
 # To start type "python "flask1.py" in terminal
+import mysql.connector
 from datetime import datetime
 from flask import Flask, render_template, request
 import socket, threading, time, json
+import modules.CRUDdbFunc
 
 #TCP SERVER
 HOST = '172.20.10.3'  # Standard loopback interface address (localhost)
@@ -107,6 +109,15 @@ def home():
 @app.route("/adminPanel")
 def adminPanel():
     global s
+    cmdHistory = []
+    cmdTime = []
+    cmdHistoryDB = modules.CRUDdbFunc.select_comhist()
+    for i in range(len(cmdHistoryDB)):
+        item = cmdHistoryDB[i]
+        historyList = item[2]
+        for j in range(len(historyList)):
+            cmdHistory.append(historyList[j])
+            cmdTime.append(item[0])
     cmdHistJSON = {
         "cmdHistory": cmdHistory,
         "cmdTime": cmdTime
@@ -194,16 +205,19 @@ def saveMap(mapData):
         mapArray1 = mapData['map']
         startPoint1 = mapData['start']
         endPoint1 = mapData['end']
+        modules.CRUDdbFunc.insert_cmap(name1, mapArray1, startPoint1, endPoint1)
     elif index == 2:
         name2 = mapData['name']
         mapArray2 = mapData['map']
         startPoint2 = mapData['start']
         endPoint2 = mapData['end']
+        modules.CRUDdbFunc.insert_cmap(name2, mapArray2, startPoint2, endPoint2)
     elif index == 3:
         name3 = mapData['name']
         mapArray3 = mapData['map']
         startPoint3 = mapData['start']
         endPoint3 = mapData['end']
+        modules.CRUDdbFunc.insert_cmap(name3, mapArray3, startPoint3, endPoint3)
     return "Map saved successfully"
 
 
@@ -225,16 +239,19 @@ def deleteMap(mapData):
     mapData = json.loads(mapData)
     index = mapData['index']
     if index == 1:
+        modules.CRUDdbFunc.delete_cmap(name1)
         name1 = ""
         mapArray1 = []
         startPoint1 = []
         endPoint1 = []
     elif index == 2:
+        modules.CRUDdbFunc.delete_cmap(name2)
         name2 = ""
         mapArray2 = []
         startPoint2 = []
         endPoint2 = []
     elif index == 3:
+        modules.CRUDdbFunc.delete_cmap(name3)
         name3 = ""
         mapArray3 = []
         startPoint3 = []
@@ -279,19 +296,26 @@ def run():
     global someData
     global cmdHistory
     global cmdTime
+    appendDBlist = []
+    modules.CRUDdbFunc.init_db()
     if len(commandList) > 0:
         now = datetime.now()
         currentTime = now.strftime("%H:%M:%S")
         for cmd in commandList:
             cmdTime.append(currentTime)
             if cmd == b'%u0':
+                appendDBlist.append("up")
                 cmdHistory.append("up")
             elif cmd == b'%b0':
+                appendDBlist.append("down")
                 cmdHistory.append("down")
             elif cmd == b'%l0':
+                appendDBlist.append("left")
                 cmdHistory.append("left")
             elif cmd == b'%r0':
+                appendDBlist.append("right")
                 cmdHistory.append("right")
+        modules.CRUDdbFunc.insert_comhist("Suhaimi", appendDBlist)
     t_end = time.time() + 5
     for cmd in commandList:
         counter = 0
@@ -322,6 +346,24 @@ def run():
 #direct map editor page
 @app.route('/mapEditor')
 def go_mapEditor():
+    global name1, mapArray1, startPoint1, endPoint1, name2, mapArray2, startPoint2, endPoint2, name3, mapArray3, startPoint3, endPoint3
+    try:
+        print(modules.CRUDdbFunc.select_cmap())
+        mapsDetail = modules.CRUDdbFunc.select_cmap()
+        name1 = mapsDetail[0]
+        mapArray1 = mapsDetail[1]
+        startPoint1 = mapsDetail[2]
+        endPoint1 = mapsDetail[3]
+        name2 = mapsDetail[4]
+        mapArray2 = mapsDetail[5]
+        startPoint2 = mapsDetail[6]
+        endPoint2 = mapsDetail[7]
+        name3 = mapsDetail[8]
+        mapArray3 = mapsDetail[9]
+        startPoint3 = mapsDetail[10]
+        endPoint3 = mapsDetail[11]
+    except:
+        print("error querying map from db")
     mapData = {
         "name1": name1,
         "map1": mapArray1,
@@ -343,6 +385,7 @@ def go_mapEditor():
 
 
 if __name__ == "__main__":
+    modules.CRUDdbFunc.init_db()
     t = threading.Thread(target=launchServer)
     t.daemon = True
     t.start()

@@ -1,17 +1,19 @@
-CREATE DATABASE `2201` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE `2201`;
+
+USE `2201`;
 
 CREATE TABLE `challengemaps` (
   `map_name` varchar(45) NOT NULL,
-  `obstacle_array` blob NOT NULL,
-  `start_point` blob NOT NULL,
-  `end_point` blob NOT NULL,
+  `obstacle_array` varchar(1000) NOT NULL,
+  `start_point` varchar(10) NOT NULL,
+  `end_point` varchar(10) NOT NULL,
   PRIMARY KEY (`map_name`),
   UNIQUE KEY `map_name_UNIQUE` (`map_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) 
 
 CREATE TABLE `commandhistory` (
   `upload_time` datetime NOT NULL,
   `author` varchar(45) NOT NULL,
-  `commandarray` blob NOT NULL,
+  `commandarray` varchar(1000) NOT NULL,
   PRIMARY KEY (`upload_time`,`author`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) 
