@@ -61,13 +61,27 @@ Main
 View this: https://drive.google.com/file/d/1xGjjpOblQPOlJRw5hZVAjBe_Hd7VzMq8/view?usp=sharing
   
 # Whitebox Testing
-# Class
-- choose one meaningful class to demonstrate your test code. “Meaningful” here means 2 or more interactions with other classes, e.g., a Control class. 
-- Please do not use an entity class.
+# Chosen Class: Challenge Map Builder
+  ## The challenge map builder control class is mainly responsible for the creating, loading, deleting and saving of maps in the application. Thus, the team has decided to test on functions that resides within the class(line 279 to 377 of flask1.py) as well as the interaction with the database entity class(CRUDdbFunc.py).
+  
+# How statistics are generated
+ ## The test cases were ran and automated with the help of unittest library provided. This library is included at the top of the test files and functions are tested by making use of the assert function provided. The team also ensured a complete coverage by asserting the different possible paths in the functions tested. As for generation of coverage statistics, we have make use of the coverage library that was installed.
 
 # Test cases
-- list the test cases for this test suite (for this one class) and where they reside in your repo
-- show code coverage statistics for each test case, including an explanation of how you have generated these statistics (whether manual, through a lib, or via the IDE)
-- provide instructions how to run the test suite
-- embed an animated gif or another short video (~1 min) of the test case being ran
+ ## List of Test Cases (Total 9 test cases)
+  - test_saveMap
+  - test_loadMap
+  - test_deleteMap
+  - test_createMap
+  - test_insertMap
+  - test_selectMap
+  - test_insertCmdHistory
+  - test_selectCmdHistory
+  - test_deleteMap (database delete)
+  
+ ## How to run
+  1. pip install coverage on terminal
+  2. To run the coverage test on test_challengeMapBuilder.py and test_CRUD.py, type "coverage run test_challengeMapBuilder.py/test_CRUD.py"
+  3. Follow by "coverage report -m" to view the code coverage
+  4. Type "coverage html" on terminal to generate coverage statistics to be viewed on browser
 
