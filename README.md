@@ -65,11 +65,15 @@ Main
   
 # Whitebox Testing
 # Class
-- choose one meaningful class to demonstrate your test code. “Meaningful” here means 2 or more interactions with other classes, e.g., a Control class. 
-- Please do not use an entity class.
+We have choosen _________. (e.g., a Control class.)
 
+![](https://github.com/Team01-2/ICT2101-2201-Team-Project/blob/main/wiki_images/ICT2101_P1-2_WhiteboxTesting.gif)
+
+Or view this at https://drive.google.com/file/d/15bIUUUl_7MFW9nE8cq0G4d9ymnI1s2p1/view?usp=sharing
+  
 # Test cases
-- list the test cases for this test suite (for this one class) and where they reside in your repo
+list the test cases for this test suite (for this one class) and where they reside in your repo
 - show code coverage statistics for each test case, including an explanation of how you have generated these statistics (whether manual, through a lib, or via the IDE)
-- provide instructions how to run the test suite
-- embed an animated gif or another short video (~1 min) of the test case being ran
+
+# Instuctions
+
