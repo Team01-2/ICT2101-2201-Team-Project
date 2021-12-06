@@ -22,6 +22,9 @@ Group Members:
 8. Run Python Command Line Terminal
 9. If terminal shows a different directory as the project you created, change directory into it by using cd <directory to project>
 10. Type "pip install flask" in terminal
+  ```
+  pip install flask
+  ```
 11. Type "pip install mysql-connector-python" in terminal 
 12. To run the project, type "python flask1.py" and click on URL that show up
 
