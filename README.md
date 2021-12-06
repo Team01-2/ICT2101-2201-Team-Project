@@ -13,7 +13,7 @@ Group Members:
   - "Choosing Set up Type" section - select custom
   - “Select Products” section - select MySQL Server, Connector/Python 8.0.27, MySQL Documentation 
   - "Installation" section - select execute
-  - "Product Configuration" section - leave as default
+  - "Product Configuration" section - leave as default (username and password should be "root")
 3. Open MySQL Workbench and click on Local Instance under MySQL Connection
 4. Insert the statements given in dbcreate.txt and execute
 5. Refresh Database
