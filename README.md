@@ -62,10 +62,10 @@ View this: https://drive.google.com/file/d/1xGjjpOblQPOlJRw5hZVAjBe_Hd7VzMq8/vie
   
 # Whitebox Testing
 # Chosen Class: Challenge Map Builder
-  ## The challenge map builder control class is mainly responsible for the creating, loading, deleting and saving of maps in the application. Thus, the team has decided to test on functions that resides within the class(line 279 to 377 of flask1.py) as well as the interaction with the database entity class(CRUDdbFunc.py).
+The challenge map builder control class is mainly responsible for the creating, loading, deleting and saving of maps in the application. Thus, the team has decided to test on functions that resides within the class(line 279 to 377 of flask1.py) as well as the interaction with the database entity class(CRUDdbFunc.py).
   
 # How statistics are generated
- ## The test cases were ran and automated with the help of unittest library provided. This library is included at the top of the test files and functions are tested by making use of the assert function provided. The team also ensured a complete coverage by asserting the different possible paths in the functions tested. As for generation of coverage statistics, we have make use of the coverage library that was installed.
+The test cases were ran and automated with the help of unittest library provided. This library is included at the top of the test files and functions are tested by making use of the assert function provided. The team also ensured a complete coverage by asserting the different possible paths in the functions tested. As for generation of coverage statistics, we have make use of the coverage library that was installed.
 
 # Test cases
  ## List of Test Cases (Total 9 test cases)
