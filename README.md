@@ -25,8 +25,14 @@ Group Members:
   ```
   pip install flask
   ```
-11. Type "pip install mysql-connector-python" in terminal 
+11. Type "pip install mysql-connector-python" in terminal
+  ```
+  pip install mysql-connector-python
+  ```
 12. To run the project, type "python flask1.py" and click on URL that show up
+  ```
+  python flask1.py
+  ```
 
 # Development Workflow
 (provide a brief yet sufficiently comprehensive description of your team’s workflow using git and GitHub features)
@@ -91,6 +97,18 @@ The test cases were ran and automated with the help of unittest library provided
   
  ## How to run
   1. pip install coverage on terminal
+  ```
+  pip install coverage
+  ```
   2. To run the coverage test on test_challengeMapBuilder.py and test_CRUD.py, type "coverage run test_challengeMapBuilder.py/test_CRUD.py"
+  ```
+  coverage run test_challengeMapBuilder.py #replace test_challengeMapBuilder.py with test_CRUD.py for testing on test_CRUD.py
+  ```
   3. Follow by "coverage report -m" to view the code coverage
+  ```
+  coverage report -m
+  ```
   4. Type "coverage html" on terminal to generate coverage statistics to be viewed on browser
+  ```
+  coverage html
+  ```
