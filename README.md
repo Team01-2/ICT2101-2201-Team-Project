@@ -17,7 +17,7 @@ Group Members:
 3. Open MySQL Workbench and click on Local Instance under MySQL Connection
 4. Insert the statements given in dbcreate.txt and execute
 5. Refresh Database
-6. Copy URL and download from the Main branch of our GITHUB repository
+6. Copy URL and download from the **Main** branch of our GITHUB repository
 7. Unzip project folder
 8. Run Python Command Line Terminal
 9. If terminal shows a different directory as the project you created, change directory into it by using cd <directory to project>
@@ -26,8 +26,6 @@ Group Members:
 12. To run the project, type "python flask1.py" and click on URL that show up
 
 # Development Workflow
-(provide a brief yet sufficiently comprehensive description of your team’s workflow using git and GitHub features)
-
 Using Git, we have created:
 1) main branch - the version that is finished developing and tested is pushed to here, Not allowed to be changed unless all group members verified and agreed on the version.
 2) dev branch - where we do our development.
@@ -41,16 +39,7 @@ Using Git, we have created:
   - Completed (Completed Tasks)
   - Diagrams & Calculations (All the latest diagrams and calculations goes here)
 5) Github Issues feature to track major developments changes during our project 
-  
-Our Current Structure in Github
-Main
-- Dev
-  - kai ching
-  - Erin
-  - Khairul
-  - cheng hao
-  - suhaimi
-  
+ 
 # UAT 
 ## Use Case Diagram
 <img src="https://github.com/Team01-2/ICT2101-2201-Team-Project/blob/main/wiki_images/UseCaseDiagram.png" width="700" height="450">
