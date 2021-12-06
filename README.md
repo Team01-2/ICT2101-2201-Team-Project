@@ -25,6 +25,7 @@ Group Members:
 11. Type "pip install mysql-connector-python" in terminal 
 12. To run the project, type "python flask1.py" and click on URL that show up
 
+For more information, please refer to our User Manual Here: https://github.com/Team01-2/ICT2101-2201-Team-Project/blob/main/User%20Manual.pdf
 # Development Workflow
 Using Git, we have created:
 1) main branch - the version that is finished developing and tested is pushed to here, Not allowed to be changed unless all group members verified and agreed on the version.
