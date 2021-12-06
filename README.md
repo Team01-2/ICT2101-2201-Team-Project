@@ -69,11 +69,13 @@ Main
 
 ![](https://github.com/Team01-2/ICT2101-2201-Team-Project/blob/main/wiki_images/ICT2101_P1-2_WhiteboxTesting.gif)
   
-# How statistics are generated
- ## The test cases were ran and automated with the help of unittest library provided. This library is included at the top of the test files and functions are tested by making use of the assert function provided. The team also ensured a complete coverage by asserting the different possible paths in the functions tested. As for generation of coverage statistics, we have make use of the coverage library that was installed.
+Or view this at https://drive.google.com/file/d/15bIUUUl_7MFW9nE8cq0G4d9ymnI1s2p1/view?usp=sharing
   
-# Test cases
- ## List of Test Cases (Total 9 test cases)
+## How statistics are generated
+ The test cases were ran and automated with the help of unittest library provided. This library is included at the top of the test files and functions are tested by making use of the assert function provided. The team also ensured a complete coverage by asserting the different possible paths in the functions tested. As for generation of coverage statistics, we have make use of the coverage library that was installed.
+  
+## Test cases
+ List of Test Cases (Total 9 test cases)
   - test_saveMap
   - test_loadMap
   - test_deleteMap
@@ -89,7 +91,3 @@ Main
   2. To run the coverage test on test_challengeMapBuilder.py and test_CRUD.py, type "coverage run test_challengeMapBuilder.py/test_CRUD.py"
   3. Follow by "coverage report -m" to view the code coverage
   4. Type "coverage html" on terminal to generate coverage statistics to be viewed on browser
-
-Or view this at https://drive.google.com/file/d/15bIUUUl_7MFW9nE8cq0G4d9ymnI1s2p1/view?usp=sharing
-  
-
