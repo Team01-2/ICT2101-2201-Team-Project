@@ -13,11 +13,11 @@ Group Members:
   - "Choosing Set up Type" section - select custom
   - “Select Products” section - select MySQL Server, Connector/Python 8.0.27, MySQL Documentation 
   - "Installation" section - select execute
-  - "Product Configuration" section - leave as default
+  - "Product Configuration" section - leave as default (username and password should be "root")
 3. Open MySQL Workbench and click on Local Instance under MySQL Connection
 4. Insert the statements given in dbcreate.txt and execute
 5. Refresh Database
-6. Copy URL and download from the Main branch of our GITHUB repository
+6. Copy URL and download from the **Main** branch of our GITHUB repository
 7. Unzip project folder
 8. Run Python Command Line Terminal
 9. If terminal shows a different directory as the project you created, change directory into it by using cd <directory to project>
@@ -34,32 +34,22 @@ Group Members:
   python flask1.py
   ```
 
+For more information, please refer to our User Manual Here: https://github.com/Team01-2/ICT2101-2201-Team-Project/blob/main/User%20Manual.pdf
 # Development Workflow
-(provide a brief yet sufficiently comprehensive description of your team’s workflow using git and GitHub features)
-
 Using Git, we have created:
-1) main branch - the version that is finished developing and tested is pushed to here, Not allowed to be changed unless all group members verified and agreed on the version.
-2) dev branch - where we do our development.
-3) individual branches - each developer developed and work on thier own personal features in thier own branch
+1) main branch - baseline versions that are developed and tested are pushed here, not to be changed unless all group members verified and agreed on the new baseline version.
+2) dev branch - where we store our development build
+3) individual branches - each developer develops features assigned to them in their own branch
 4) Github Project Board feature to track our progress and tasks allocated during our meetings (https://github.com/Team01-2/ICT2101-2201-Team-Project/projects/1)
   - Backlog (For tracking and documentation purposes)
-  - Current To-Do List (List of tasks we have come out with after every meeting with a deadline of when all tasks should be completed by)
+  - Current To-Do List (List of tasks we have come up with after every meeting, with a deadline)
   - To-Do List (Tasks related to Website ONLY)
   - To-Do List (Tasks related to Others, E.g Database, Documentations)
   - In Progress (Tasks that are currently on-going)
   - Completed (Completed Tasks)
   - Diagrams & Calculations (All the latest diagrams and calculations goes here)
-5) Github Issues feature to track major developments changes during our project 
-  
-Our Current Structure in Github
-Main
-- Dev
-  - kai ching
-  - Erin
-  - Khairul
-  - cheng hao
-  - suhaimi
-  
+5) Github Issues feature to track major development changes during our project 
+ 
 # UAT 
 ## Use Case Diagram
 <img src="https://github.com/Team01-2/ICT2101-2201-Team-Project/blob/main/wiki_images/UseCaseDiagram.png" width="700" height="450">
@@ -74,14 +64,14 @@ Main
   
 # Whitebox Testing
 ## Chosen Class: Challenge Map Builder
-The challenge map builder control class is mainly responsible for the creating, loading, deleting and saving of maps in the application. Thus, the team has decided to test on functions that resides within the class(line 279 to 377 of flask1.py) as well as the interaction with the database entity class(CRUDdbFunc.py).
+The challenge map builder control class is mainly responsible for the creating, loading, deleting and saving of maps in the application. Thus, the team has decided to test functions that reside within the class (line 279 to 377 of flask1.py) as well as the interaction with the database entity class (CRUDdbFunc.py).
 
 ![](https://github.com/Team01-2/ICT2101-2201-Team-Project/blob/main/wiki_images/ICT2101_P1-2_WhiteboxTesting.gif)
   
 Or view this at https://drive.google.com/file/d/15bIUUUl_7MFW9nE8cq0G4d9ymnI1s2p1/view?usp=sharing
   
 ## How statistics are generated
-The test cases were ran and automated with the help of unittest library provided. This library is included at the top of the test files and functions are tested by making use of the assert function provided. The team also ensured a complete coverage by asserting the different possible paths in the functions tested. As for generation of coverage statistics, we have make use of the coverage library that was installed.
+The test cases were ran and automated with the help of unittest library. This library is included at the top of the test files and functions are tested by making use of the assert function. The team also ensured a complete coverage by asserting the different possible paths in the functions tested. As for generation of coverage statistics, we have made use of the coverage library that was installed.
   
 ## Test cases
  List of Test Cases (Total 9 test cases)
